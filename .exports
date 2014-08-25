@@ -1,9 +1,7 @@
 # Make vim the default editor
-<<<<<<< HEAD
-export EDITOR="vim";
-=======
+
+
 export EDITOR="subl"
->>>>>>> 2b28a101670611c7516c9b084efec474b3f09f79
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768;
