@@ -1,0 +1,335 @@
+#!/usr/bin/env bash
+
+# ============================================
+# Navigation Aliases
+# ============================================
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ~="cd ~"
+alias -- -="cd -"
+
+# Quick directory access
+alias web="cd ~/web"
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias p="cd ~/projects"
+alias docs="cd ~/Documents"
+alias dev="cd ~/Development"
+
+# ============================================
+# Modern Replacements with Icons (Nerd Fonts)
+# ============================================
+
+# Eza (modern ls) - since you already have it
+alias ls='eza --icons --group-directories-first'
+alias l='eza -l --icons --git --group-directories-first'
+alias la='eza -la --icons --git --group-directories-first'
+alias ll='eza -l --icons --git --header --group-directories-first'
+alias lla='eza -la --icons --git --header --group-directories-first'
+alias lt='eza --tree --level=2 --icons --git'
+alias lta='eza --tree --level=2 --icons --git -a'
+alias ltt='eza --tree --icons --git'
+alias lsd='eza -lD --icons'  # List only directories
+alias lsf='eza -lf --icons'  # List only files
+
+# Alternative: If you prefer lsd over eza
+# alias ls='lsd --group-dirs first'
+# alias l='lsd -l --group-dirs first'
+# alias la='lsd -la --group-dirs first'
+# alias lt='lsd --tree --depth 2'
+
+# Bat (better cat with syntax highlighting)
+if command -v bat &> /dev/null; then
+    alias cat='bat --style=plain'
+    alias catn='bat --style=numbers'
+    alias catf='bat --style=full'
+fi
+
+# Ripgrep (faster grep)
+if command -v rg &> /dev/null; then
+    alias grep='rg'
+    alias rgi='rg -i'  # Case insensitive
+    alias rgl='rg -l'  # List files only
+fi
+
+# FZF enhanced commands
+if command -v fzf &> /dev/null; then
+    alias fh='history | fzf'  # Fuzzy search history
+    alias ff='find . -type f | fzf'  # Fuzzy find files
+    alias fd='find . -type d | fzf'  # Fuzzy find directories
+fi
+
+# Zoxide (smarter cd) - if installed
+if command -v zoxide &> /dev/null; then
+    alias cd='z'
+    alias cdi='zi'  # Interactive selection
+fi
+
+# ============================================
+# Git Aliases
+# ============================================
+alias g="git"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gcm="git commit -m"
+alias gp="git push"
+alias gpl="git pull"
+alias gb="git branch"
+alias gco="git checkout"
+alias gd="git diff"
+alias gl="git log --oneline --graph --decorate"
+alias gla="git log --oneline --graph --decorate --all"
+
+# Git with delta for beautiful diffs
+if command -v delta &> /dev/null; then
+    alias gdiff='git diff | delta'
+    alias gshow='git show | delta'
+fi
+
+# ============================================
+# System & Process Management
+# ============================================
+
+# Better top alternatives
+if command -v btop &> /dev/null; then
+    alias top='btop'
+elif command -v htop &> /dev/null; then
+    alias top='htop'
+fi
+
+# Disk usage with dust or ncdu
+if command -v dust &> /dev/null; then
+    alias du='dust'
+elif command -v ncdu &> /dev/null; then
+    alias du='ncdu'
+fi
+
+# Process management
+alias psa='ps aux'
+alias psg='ps aux | grep -v grep | grep -i'
+alias kill9='kill -9'
+
+# ============================================
+# macOS Specific
+# ============================================
+
+# IP addresses (improved)
+alias ip="curl -s https://ipinfo.io/ip"
+alias localip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+
+# System maintenance
+alias update='sudo softwareupdate -i -a; brew update && brew upgrade && brew cleanup; brew doctor'
+alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+
+# Finder
+alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+alias o="open ."
+alias oo="open ."
+
+# Applications
+alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+alias canary='/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary'
+alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+
+# Quick locks and system
+alias restart="sudo shutdown -r now"
+alias shutdown="sudo shutdown -h now"
+alias lock="pmset sleepnow"
+
+# ============================================
+# Development & Tools
+# ============================================
+
+# Python
+alias py="python3"
+alias pip="pip3"
+alias venv="python3 -m venv"
+alias activate="source venv/bin/activate"
+
+# Node.js
+alias ni="npm install"
+alias ns="npm start"
+alias nt="npm test"
+alias nr="npm run"
+
+# Docker
+alias d="docker"
+alias dc="docker compose"
+alias dps="docker ps"
+alias dpsa="docker ps -a"
+alias di="docker images"
+alias drm="docker rm"
+alias drmi="docker rmi"
+
+# Kubernetes
+alias k="kubectl"
+alias kgp="kubectl get pods"
+alias kgs="kubectl get services"
+alias kgd="kubectl get deployments"
+
+# HTTP requests with HTTPie (if installed)
+if command -v http &> /dev/null; then
+    alias GET='http GET'
+    alias POST='http POST'
+    alias PUT='http PUT'
+    alias DELETE='http DELETE'
+fi
+
+# ============================================
+# Utility Functions as Aliases
+# ============================================
+
+# Create and enter directory
+alias mkcd='function _mkcd(){ mkdir -p "$1" && cd "$1"; }; _mkcd'
+
+# Extract archives
+alias extract='function _extract(){
+    if [ -f $1 ]; then
+        case $1 in
+            *.tar.bz2)   tar xjf $1     ;;
+            *.tar.gz)    tar xzf $1     ;;
+            *.bz2)       bunzip2 $1     ;;
+            *.rar)       unrar e $1     ;;
+            *.gz)        gunzip $1      ;;
+            *.tar)       tar xf $1      ;;
+            *.tbz2)      tar xjf $1     ;;
+            *.tgz)       tar xzf $1     ;;
+            *.zip)       unzip $1       ;;
+            *.Z)         uncompress $1  ;;
+            *.7z)        7z x $1        ;;
+            *)     echo "Cannot extract $1" ;;
+        esac
+    else
+        echo "$1 is not a valid file"
+    fi
+}; _extract'
+
+# Quick backup
+alias backup='function _backup(){ cp "$1" "$1.backup.$(date +%Y%m%d_%H%M%S)"; }; _backup'
+
+# Weather
+alias weather='curl wttr.in'
+alias weatherfull='curl v2.wttr.in'
+
+# Cheat sheets
+alias cheat='function _cheat(){ curl "cheat.sh/$1"; }; _cheat'
+
+# ============================================
+# Terminal Enhancement
+# ============================================
+
+# Colors for grep
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Enable aliases to be sudo'ed
+alias sudo='sudo '
+
+# Reload shell configuration
+alias reload="exec ${SHELL} -l"
+alias sz="source ~/.zshrc"
+alias ez="$EDITOR ~/.zshrc"
+alias ea="$EDITOR ~/.aliases"
+
+# Clear with style
+alias cl='clear'
+alias cls='clear && ls'
+alias cll='clear && ll'
+
+# Quick edits
+alias hosts='sudo $EDITOR /etc/hosts'
+
+# Path
+alias path='echo -e ${PATH//:/\\n}'
+
+# Date & Time
+alias now='date +"%Y-%m-%d %H:%M:%S"'
+alias week='date +%V'
+alias today='date +"%Y-%m-%d"'
+
+# ============================================
+# Fun & Useful
+# ============================================
+
+# Matrix effect
+alias matrix='cmatrix'
+
+# System info with style
+if command -v fastfetch &> /dev/null; then
+    alias sysinfo='fastfetch'
+elif command -v neofetch &> /dev/null; then
+    alias sysinfo='neofetch'
+fi
+
+# Quick notes
+alias notes='$EDITOR ~/notes.md'
+alias todo='$EDITOR ~/todo.md'
+
+# URL encode/decode
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))"'
+alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
+
+# JSON pretty print
+alias jsonpp='python3 -m json.tool'
+
+# Quick serve current directory
+alias serve='python3 -m http.server 8000'
+
+# Copy with progress
+alias cpv='rsync -ah --info=progress2'
+
+# Clipboard
+alias c="tr -d '\n' | pbcopy"
+alias paste="pbpaste"
+
+# Quick calculations
+alias calc='bc -l'
+
+# ============================================
+# Safety Aliases
+# ============================================
+
+# Confirmation prompts for dangerous operations
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# # Prevent mistakes
+# alias chown='chown --preserve-root'
+# alias chmod='chmod --preserve-root'
+# alias chgrp='chgrp --preserve-root'
+
+# ============================================
+# Export Environment Variables
+# ============================================
+
+# Better ls colors for dark terminals
+export LSCOLORS='ExGxBxDxCxEgEdxbxgxcxd'
+export CLICOLOR=1
+
+# Bat theme (if using bat)
+export BAT_THEME="TwoDark"
+
+# FZF default options (if using fzf)
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --preview "bat --style=numbers --color=always {} 2>/dev/null || cat {}"'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
+# Man pages with color
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'

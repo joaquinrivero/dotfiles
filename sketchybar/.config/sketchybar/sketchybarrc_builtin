@@ -1,0 +1,64 @@
+#!/usr/bin/env sh
+
+source "$HOME/.config/sketchybar/colors.sh"
+source "$HOME/.config/sketchybar/icons.sh"
+
+ITEM_DIR="$HOME/.config/sketchybar/items"
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+FONT="SF Pro"
+PADDINGS=3
+SHADOW=on
+
+# Export the sketchybar command for item files to use
+export SKETCHYBAR_CMD="sketchybar_builtin"
+
+echo "=================================================="
+echo "Starting sketchybar_builtin configuration"
+echo "Command: ${SKETCHYBAR_CMD}"
+echo "Display: 1 (Built-in)"
+echo "Position: top (Built-in monitor)"
+echo "=================================================="
+
+# Built-in monitor - Top
+sketchybar_builtin --bar height=50 \
+                 color=$BAR_COLOR \
+                 shadow=$SHADOW \
+                 position=top \
+                 y_offset=15 \
+                 display=1 \
+                 sticky=on \
+                 padding_right=18 \
+                 padding_left=18 \
+                 corner_radius=9 \
+                 margin=10 \
+                 blur_radius=20 \
+                 drawing=on \
+           --default updates=when_shown \
+                 icon.font="$FONT:Bold:14.0" \
+                 icon.color=$ICON_COLOR \
+                 icon.padding_left=$PADDINGS \
+                 icon.padding_right=$PADDINGS \
+                 label.font="$FONT:Semibold:13.0" \
+                 label.color=$LABEL_COLOR \
+                 label.padding_left=$PADDINGS \
+                 label.padding_right=$PADDINGS \
+                 background.padding_right=$PADDINGS \
+                 background.padding_left=$PADDINGS \
+                 popup.background.border_width=2 \
+                 popup.background.corner_radius=11 \
+                 popup.background.border_color=$POPUP_BORDER_COLOR \
+                 popup.background.color=$POPUP_BACKGROUND_COLOR \
+                 popup.background.shadow.drawing=$SHADOW
+
+source "$ITEM_DIR/apple.sh"
+echo "[builtin] ✓ Loaded apple.sh"
+
+source "$ITEM_DIR/spaces.sh"
+echo "[builtin] ✓ Loaded spaces.sh"
+
+source "$ITEM_DIR/calendar.sh"
+echo "[builtin] ✓ Loaded calendar.sh"
+
+echo "[builtin] Configuration complete - updating display"
+sketchybar_builtin --update
+echo "=================================================="

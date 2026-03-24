@@ -1,0 +1,9 @@
+# Global gitignore
+*~
+.DS_Store
+.env
+WARP.md
+
+# Claude Code
+**/.claude/settings.local.json
+**/CLAUDE.local.md

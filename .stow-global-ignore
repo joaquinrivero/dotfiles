@@ -1,0 +1,6 @@
+README\.md
+LICENSE.*
+setup\.sh
+\.gitignore
+\.stow-global-ignore
+\.DS_Store
