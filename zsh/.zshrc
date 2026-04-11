@@ -123,6 +123,7 @@ cursor() { open -a "Cursor" "$@" }
 # Aliases & Private Env
 # ============================================
 [ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
+[ -f "$HOME/.gitfunctions" ] && source "$HOME/.gitfunctions"
 [ -f "$HOME/.env.private" ] && source "$HOME/.env.private"
 
 # ============================================
