@@ -158,6 +158,9 @@
 
 # URL shorthands
 
+[url "git@github.com-enterprise:Adobe-"]
+	insteadOf = "git@github.com:Adobe-"
+
 [url "git@github.com:"]
 
 	insteadOf = "gh:"
@@ -184,6 +187,10 @@
 [include]
 	# Local identity (name, email) — not committed
 	path = ~/.gitconfig.local
+
+[includeIf "gitdir:~/src/adobe/corp/"]
+	# Enterprise identity — overrides local for any repo under ~/src/adobe/corp/
+	path = ~/.gitconfig.d/adobe.inc
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
