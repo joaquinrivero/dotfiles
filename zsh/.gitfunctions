@@ -1,0 +1,56 @@
+#!/usr/bin/env zsh
+# ============================================
+# Git Multi-Account Functions
+# ============================================
+
+# Clone an Adobe enterprise repo (auto-routes through enterprise SSH alias)
+# Usage: clone-adobe <repo> [org]
+#   org defaults to Adobe-acom
+# Clone an Adobe enterprise repo and inject adobe identity into local config
+# Usage: clone-adobe <repo> [org]
+#   org defaults to Adobe-acom
+clone-adobe() {
+    local repo=${1:?'usage: clone-adobe <repo> [org]'}
+    local org=${2:-Adobe-acom}
+    git clone "git@github.com-enterprise:${org}/${repo}.git" && \
+        git -C "${repo%.git}" config include.path "~/.gitconfig.d/adobe.inc" && \
+        printf "Identity set → jrivero@adobe.com in %s\n" "${repo%.git}"
+}
+
+# Retrofit an existing enterprise repo with the adobe identity include
+# Usage: git-make-adobe [path]  (defaults to current directory)
+git-make-adobe() {
+    local dir=${1:-.}
+    git -C "$dir" config include.path "~/.gitconfig.d/adobe.inc"
+    printf "Identity set → jrivero@adobe.com in %s\n" "$(git -C "$dir" rev-parse --show-toplevel)"
+}
+
+# Clone a personal / OSS repo
+# Usage: clone-personal <repo> [user]
+clone-personal() {
+    local repo=${1:?'usage: clone-personal <repo> [user]'}
+    local user=${2:-joaquinrivero}
+    git clone "git@github.com:${user}/${repo}.git"
+}
+
+# Show which git identity is active in the current repo
+git-who() {
+    local name email remote
+    name=$(git config user.name 2>/dev/null || echo '(not set)')
+    email=$(git config user.email 2>/dev/null || echo '(not set)')
+    remote=$(git remote get-url origin 2>/dev/null || echo '(no origin)')
+    printf "name:   %s\nemail:  %s\nremote: %s\n" "$name" "$email" "$remote"
+}
+
+# Add an enterprise remote to an existing repo
+# Usage: git-add-enterprise <org> <repo>
+git-add-enterprise() {
+    local org=${1:?'usage: git-add-enterprise <org> <repo>'}
+    local repo=${2:?'usage: git-add-enterprise <org> <repo>'}
+    git remote add enterprise "git@github.com-enterprise:${org}/${repo}.git"
+    printf "Added remote 'enterprise' → git@github.com-enterprise:%s/%s.git\n" "$org" "$repo"
+}
+
+# Switch gh CLI context — use before gh commands that need a specific account
+gh-personal() { gh auth switch --user joaquinrivero; }
+gh-adobe()    { gh auth switch --user jrivero_adobe; }
