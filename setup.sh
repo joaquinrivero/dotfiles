@@ -75,3 +75,21 @@ if [ "$HAS_CONFLICTS" = true ]; then
 fi
 echo ""
 echo "Verify with: ls -la ~/.zshrc ~/.gitconfig ~/.tmux.conf"
+echo ""
+
+# Step 4: Git identity setup
+echo "=== Git Identity Setup ==="
+if [ -f "$DOTFILES_DIR/git/.gitconfig.d/personal.inc" ]; then
+    echo "Identity files already exist — skipping."
+else
+    echo "You need to configure your git identity."
+    echo ""
+    echo "Options:"
+    echo "  1) Run the setup script:  ./git/setup-identity.sh"
+    echo "  2) Let Claude Code guide you:  claude"
+    echo ""
+    read -rp "Run identity setup now? [y/N] " answer
+    if [[ "$answer" =~ ^[Yy]$ ]]; then
+        "$DOTFILES_DIR/git/setup-identity.sh"
+    fi
+fi

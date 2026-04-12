@@ -12,15 +12,19 @@ cd ~/dotfiles
 
 `setup.sh` will install Stow (via Homebrew if needed), back up any existing config files to `~/.dotfiles-backup-<timestamp>/`, and create symlinks for all packages.
 
-After setup, create your local git identity (not tracked by the repo):
+After stowing, set up your git identity:
 
 ```bash
-cat > ~/.gitconfig.local << 'EOF'
-[user]
-	name = Your Name
-	email = your@email.com
-EOF
+./git/setup-identity.sh
 ```
+
+Or let Claude Code walk you through the full setup interactively:
+
+```bash
+claude
+```
+
+Claude reads `CLAUDE.md` and knows how to configure identity files, install missing CLI tools, and set up shell plugins.
 
 ## Packages
 

@@ -1,6 +1,8 @@
 README\.md
+CLAUDE\.md
 LICENSE.*
 setup\.sh
+\.claude
 \.gitignore
 \.stow-global-ignore
 \.DS_Store
