@@ -1,0 +1,11 @@
+# Adobe enterprise git identity
+# Copy to adobe.inc and fill in your values, or run: ./git/setup-identity.sh
+[user]
+    name = Your Name
+    email = yourldap@adobe.com
+
+[github]
+    user = yourldap_adobe
+
+[commit]
+    template = ~/.gitconfig.d/adobe-commit-template.txt

@@ -11,5 +11,9 @@
 .env.private
 .gitconfig.local
 
+# Generated identity files (use setup-identity.sh or copy from *.example)
+git/.gitconfig.d/*.inc
+git/.gitconfig.d/adobe-commit-template.txt
+
 # Compiled binaries
 sketchybar/.config/sketchybar/helper/helper
