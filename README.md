@@ -5,7 +5,7 @@ Personal macOS configuration managed with [GNU Stow](https://www.gnu.org/softwar
 ## Setup
 
 ```bash
-git clone https://github.com/joaquinrivero/dotfiles.git ~/dotfiles
+git clone git@github.com:joaquinrivero/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./setup.sh
 ```
@@ -39,6 +39,7 @@ Claude reads `CLAUDE.md` and knows how to configure identity files, install miss
 | `starship` | Cross-shell prompt (Catppuccin Mocha) |
 | `gh` | GitHub CLI config |
 | `misc` | `.editorconfig`, `.curlrc`, `.hushlogin` |
+| `direnv` | Per-directory `GH_TOKEN` for `gh` CLI (corp → `jrivero_adobe`, oss → `joaquinrivero`) |
 
 ## How it works
 
