@@ -2,7 +2,7 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(zsh git tmux starship aerospace sketchybar hammerspoon gh misc)
+PACKAGES=(zsh git tmux starship aerospace sketchybar hammerspoon gh misc direnv)
 
 echo "=== Dotfiles Setup ==="
 echo "Dotfiles directory: $DOTFILES_DIR"
