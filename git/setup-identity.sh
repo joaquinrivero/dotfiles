@@ -34,19 +34,8 @@ cat > "$DIR/adobe.inc" <<EOF
 
 [github]
     user = ${adobe_gh}
-
-[commit]
-    template = ~/.gitconfig.d/adobe-commit-template.txt
 EOF
 echo "Wrote $DIR/adobe.inc"
-
-# Compose commit template from the adobe identity
-cat > "$DIR/adobe-commit-template.txt" <<EOF
-
-
-Co-authored-by: ${adobe_name} <${adobe_email}>
-EOF
-echo "Wrote $DIR/adobe-commit-template.txt"
 
 echo ""
 echo "Done. Identity files generated in $DIR"
