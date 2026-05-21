@@ -104,7 +104,7 @@ echo ""
 
 # Step 4: Fonts
 echo "=== Fonts ==="
-if brew list --cask font-meslo-lg-nerd-font &>/dev/null; then
+if ls ~/Library/Fonts/MesloLG*Nerd* &>/dev/null; then
     echo "MesloLG Nerd Font already installed — skipping."
 else
     echo "Installing MesloLG Nerd Font..."
