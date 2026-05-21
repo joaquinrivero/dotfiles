@@ -4,6 +4,7 @@
 # Terminal Performance
 # ============================================
 export SHELL_SESSIONS_DISABLE=1
+export COLORTERM=truecolor
 
 # ============================================
 # Completion Setup
