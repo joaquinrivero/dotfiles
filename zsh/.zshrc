@@ -145,3 +145,9 @@ alias fig-start='/Users/rivero/ai/figma-cli/bin/fig-start'
 # zoxide must be initialized last
 export _ZO_DOCTOR=0
 eval "$(zoxide init zsh)"
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C
+# <<< grok installer <<<
