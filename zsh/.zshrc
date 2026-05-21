@@ -36,10 +36,10 @@ bindkey '^[^[[D' backward-word
 # ============================================
 # Catppuccin Mocha Prompt
 # ============================================
-CATPPUCCIN_GREEN=$'\e[38;2;166;227;161m'
-CATPPUCCIN_PEACH=$'\e[38;2;250;179;135m'
-CATPPUCCIN_TEAL=$'\e[38;2;148;226;213m'
-CATPPUCCIN_YELLOW=$'\e[38;2;249;226;175m'
+CATPPUCCIN_GREEN=$'\e[38;5;114m'
+CATPPUCCIN_PEACH=$'\e[38;5;216m'
+CATPPUCCIN_TEAL=$'\e[38;5;116m'
+CATPPUCCIN_YELLOW=$'\e[38;5;229m'
 RESET=$'\e[0m'
 
 git_prompt_info_custom() {
@@ -55,7 +55,7 @@ PROMPT='%{${CATPPUCCIN_PEACH}%}➜%{${RESET}%}  %{${CATPPUCCIN_TEAL}%}%1~%{${RES
 # ============================================
 # Eza Colors
 # ============================================
-export EZA_COLORS="di=38;2;203;166;247:ex=38;2;166;227;161"
+export EZA_COLORS="di=38;5;183:ex=38;5;114"
 
 # ============================================
 # Path & Environment
