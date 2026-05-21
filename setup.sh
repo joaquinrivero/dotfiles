@@ -2,7 +2,7 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(zsh git tmux starship aerospace sketchybar hammerspoon gh misc direnv)
+PACKAGES=(zsh git tmux starship aerospace sketchybar hammerspoon gh misc direnv zed)
 
 echo "=== Dotfiles Setup ==="
 echo "Dotfiles directory: $DOTFILES_DIR"
@@ -77,7 +77,28 @@ echo ""
 echo "Verify with: ls -la ~/.zshrc ~/.gitconfig ~/.tmux.conf"
 echo ""
 
-# Step 4: Git identity setup
+# Step 4: Fonts
+echo "=== Fonts ==="
+if brew list --cask font-meslo-lg-nerd-font &>/dev/null; then
+    echo "MesloLG Nerd Font already installed — skipping."
+else
+    echo "Installing MesloLG Nerd Font..."
+    brew install --cask font-meslo-lg-nerd-font
+fi
+
+# Step 5: Terminal theme
+echo ""
+echo "=== Terminal Theme ==="
+TERMINAL_THEME="$DOTFILES_DIR/terminal/catppuccin-mocha.terminal"
+if [ -f "$TERMINAL_THEME" ]; then
+    echo "Importing Catppuccin Mocha terminal theme..."
+    open "$TERMINAL_THEME"
+    echo "  Theme imported. Set it as default in Terminal > Preferences > Profiles."
+else
+    echo "Terminal theme not found at $TERMINAL_THEME — skipping."
+fi
+
+# Step 6: Git identity setup
 echo "=== Git Identity Setup ==="
 if [ -f "$DOTFILES_DIR/git/.gitconfig.d/personal.inc" ]; then
     echo "Identity files already exist — skipping."
