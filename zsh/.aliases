@@ -22,17 +22,18 @@ alias dev="cd ~/Development"
 # Modern Replacements with Icons (Nerd Fonts)
 # ============================================
 
-# Eza (modern ls) - since you already have it
-alias ls='eza --icons --group-directories-first'
-alias l='eza -l --icons --git --group-directories-first'
-alias la='eza -la --icons --git --group-directories-first'
-alias ll='eza -l --icons --git --header --group-directories-first'
-alias lla='eza -la --icons --git --header --group-directories-first'
-alias lt='eza --tree --level=2 --icons --git'
-alias lta='eza --tree --level=2 --icons --git -a'
-alias ltt='eza --tree --icons --git'
-alias lsd='eza -lD --icons'  # List only directories
-alias lsf='eza -lf --icons'  # List only files
+if command -v eza &>/dev/null; then
+  alias ls='eza --icons --group-directories-first'
+  alias l='eza -l --icons --git --group-directories-first'
+  alias la='eza -la --icons --git --group-directories-first'
+  alias ll='eza -l --icons --git --header --group-directories-first'
+  alias lla='eza -la --icons --git --header --group-directories-first'
+  alias lt='eza --tree --level=2 --icons --git'
+  alias lta='eza --tree --level=2 --icons --git -a'
+  alias ltt='eza --tree --icons --git'
+  alias lsd='eza -lD --icons'
+  alias lsf='eza -lf --icons'
+fi
 
 # Alternative: If you prefer lsd over eza
 # alias ls='lsd --group-dirs first'

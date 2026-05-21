@@ -4,6 +4,13 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGES=(zsh git tmux starship aerospace sketchybar hammerspoon gh misc direnv zed)
 
+# Ensure Homebrew is on PATH (Apple Silicon puts it at /opt/homebrew)
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 echo "=== Dotfiles Setup ==="
 echo "Dotfiles directory: $DOTFILES_DIR"
 echo ""
@@ -59,6 +66,24 @@ if [ "$HAS_CONFLICTS" = true ]; then
         fi
     done
 fi
+
+# Step 2b: Install required CLI tools
+CLI_TOOLS=(eza bat fzf zoxide starship tmux)
+echo "Checking CLI tools..."
+MISSING_TOOLS=()
+for tool in "${CLI_TOOLS[@]}"; do
+    if ! command -v "$tool" &>/dev/null; then
+        MISSING_TOOLS+=("$tool")
+    fi
+done
+
+if [ ${#MISSING_TOOLS[@]} -gt 0 ]; then
+    echo "Installing missing tools: ${MISSING_TOOLS[*]}"
+    brew install "${MISSING_TOOLS[@]}"
+else
+    echo "All CLI tools already installed."
+fi
+echo ""
 
 # Step 3: Stow all packages
 echo ""
