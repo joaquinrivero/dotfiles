@@ -7,6 +7,9 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "active_pane_modifiers": {
+    "inactive_opacity": 1.0
+  },
   "cli_default_open_behavior": "new_window",
   "unnecessary_code_fade": 0.3,
   "icon_theme": {
