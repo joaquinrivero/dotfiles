@@ -2,5 +2,7 @@
   "window.commandCenter": true,
   "editor.fontFamily": "'Hack Nerd Font Mono', 'Courier New', monospace",
   "editor.fontSize": 16,
-  "terminal.integrated.fontFamily": "Hack Nerd Font Mono"
+  "terminal.integrated.fontFamily": "Hack Nerd Font Mono",
+  "security.workspace.trust.enabled": true,
+  "workbench.colorTheme": "Catppuccin Mocha"
 }
