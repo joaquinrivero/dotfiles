@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal macOS configuration managed with [GNU Stow](https://www.gnu.org/software/stow/).
+macOS configuration managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
 ## Setup
 
@@ -10,21 +10,21 @@ cd ~/dotfiles
 ./setup.sh
 ```
 
-`setup.sh` will install Stow (via Homebrew if needed), back up any existing config files to `~/.dotfiles-backup-<timestamp>/`, and create symlinks for all packages.
+`setup.sh` installs Stow via Homebrew, backs up conflicting files to `~/.dotfiles-backup-<timestamp>/`, and symlinks all packages.
 
-After stowing, set up your git identity:
+Set up your git identity after stowing:
 
 ```bash
 ./git/setup-identity.sh
 ```
 
-Or let Claude Code walk you through the full setup interactively:
+To configure interactively with Claude Code:
 
 ```bash
 claude
 ```
 
-Claude reads `CLAUDE.md` and knows how to configure identity files, install missing CLI tools, and set up shell plugins.
+Claude reads `CLAUDE.md` and handles identity files, missing CLI tools, and shell plugins.
 
 ## Packages
 
@@ -37,13 +37,16 @@ Claude reads `CLAUDE.md` and knows how to configure identity files, install miss
 | `sketchybar` | Custom macOS menu bar |
 | `hammerspoon` | macOS automation (Spoons included) |
 | `starship` | Cross-shell prompt (Catppuccin Mocha) |
+| `zed` | Zed editor settings and Catppuccin theme |
+| `warp` | Warp terminal settings |
+| `cursor` | Cursor editor settings |
 | `gh` | GitHub CLI config |
 | `misc` | `.editorconfig`, `.curlrc`, `.hushlogin` |
-| `direnv` | Per-directory `GH_TOKEN` for `gh` CLI (corp → `jrivero_adobe`, oss → `joaquinrivero`) |
+| `direnv` | Per-directory env overrides |
 
 ## How it works
 
-Each top-level directory is a Stow package that mirrors the file structure relative to `~`. Running `stow <package>` from the repo creates symlinks in your home directory:
+Each top-level directory is a Stow package mirroring the file structure relative to `~`. `stow <package>` creates symlinks in your home directory:
 
 ```
 dotfiles/zsh/.zshrc           →  ~/.zshrc
@@ -51,34 +54,27 @@ dotfiles/git/.gitconfig       →  ~/.gitconfig
 dotfiles/aerospace/.config/…  →  ~/.config/aerospace/…
 ```
 
-Editing files in `~/dotfiles/` changes the live config directly — no copy or sync step needed.
+Editing files in `~/dotfiles/` updates the live config — no copy step needed.
 
 ## Managing packages
 
 ```bash
-# Stow a single package
-stow -t ~ git
-
-# Unstow (remove symlinks)
-stow -t ~ -D git
-
-# Re-stow (useful after adding files to a package)
-stow -t ~ -R git
-
-# Stow everything
-cd ~/dotfiles && stow -t ~ */
+stow -t ~ git        # stow a package
+stow -t ~ -D git     # remove symlinks
+stow -t ~ -R git     # re-stow after adding files
+cd ~/dotfiles && stow -t ~ */  # stow everything
 ```
 
 ## Device-specific config
 
-Anything that belongs to one machine — tool completions, local paths, work proxies — goes in `~/.zshrc.local`. It is sourced at the very end of `.zshrc` and is never tracked in git.
+Machine-specific config — tool completions, local paths, work proxies — goes in `~/.zshrc.local`. Sourced at the end of `.zshrc`, never tracked in git.
 
 ```bash
 cp ~/dotfiles/zsh/.zshrc.local.example ~/.zshrc.local
 # edit and uncomment what applies to this machine
 ```
 
-This works the same on Linux — just create `~/.zshrc.local` with whatever is specific to that box.
+Works the same on Linux.
 
 ## Adding a new package
 
@@ -87,7 +83,8 @@ This works the same on Linux — just create `~/.zshrc.local` with whatever is s
 3. Run `stow -t ~ <package>`
 
 Example for neovim:
-```
+
+```bash
 mkdir -p nvim/.config/nvim
 cp ~/.config/nvim/init.lua nvim/.config/nvim/
 stow -t ~ nvim
