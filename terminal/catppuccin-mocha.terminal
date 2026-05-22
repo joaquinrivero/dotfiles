@@ -146,17 +146,23 @@
 	cqIWGFhOU09iamVjdAgRGiQpMjdJTFFTV11kand+qKqssbzFzdAAAAAAAAABAQAAAAAA
 	AAAZAAAAAAAAAAAAAAAAAAAA2Q==
 	</data>
+	<key>BackgroundAlphaInactive</key>
+	<real>0.75</real>
 	<key>BackgroundBlur</key>
-	<real>0.0</real>
+	<real>1</real>
+	<key>BackgroundBlurInactive</key>
+	<integer>1</integer>
 	<key>BackgroundColor</key>
 	<data>
 	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
 	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGjCwwTVSRudWxs0w0ODxARElVO
-	U1JHQlxOU0NvbG9yU3BhY2VWJGNsYXNzTxAmMC4xMTc2NDcwNTkzIDAuMTE3NjQ3MDU5
-	MyAwLjE4MDM5MjE2MQAQAYAC0hQVFhdaJGNsYXNzbmFtZVgkY2xhc3Nlc1dOU0NvbG9y
-	ohYYWE5TT2JqZWN0CBEaJCkyN0lMUVNXXWRqd36nqauwu8TMzwAAAAAAAAEBAAAAAAAA
-	ABkAAAAAAAAAAAAAAAAAAADY
+	U1JHQlxOU0NvbG9yU3BhY2VWJGNsYXNzTxAqMC4xMTc2NDcwNTkzIDAuMTE3NjQ3MDU5
+	MyAwLjE4MDM5MjE2MSAwLjUAEAGAAtIUFRYXWiRjbGFzc25hbWVYJGNsYXNzZXNXTlND
+	b2xvcqIWGFhOU09iamVjdAgRGiQpMjdJTFFTV11kand+q62vtL/I0NMAAAAAAAABAQAA
+	AAAAAAAZAAAAAAAAAAAAAAAAAAAA3A==
 	</data>
+	<key>BackgroundSettingsForInactiveWindows</key>
+	<true/>
 	<key>BoldTextColor</key>
 	<data>
 	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
@@ -216,9 +222,13 @@
 	cqIWGFhOU09iamVjdAgRGiQpMjdJTFFTV11kand+qKqssbzFzdAAAAAAAAABAQAAAAAA
 	AAAZAAAAAAAAAAAAAAAAAAAA2Q==
 	</data>
+	<key>UseBrightBold</key>
+	<true/>
 	<key>name</key>
 	<string>catppuccin-mocha</string>
 	<key>type</key>
 	<string>Window Settings</string>
+	<key>useOptionAsMetaKey</key>
+	<true/>
 </dict>
 </plist>
