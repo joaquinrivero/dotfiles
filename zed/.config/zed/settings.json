@@ -54,7 +54,7 @@
     "dock": "left",
     "button": true,
   },
-  "ui_font_family": "Hack Nerd Font",
+  "ui_font_family": ".SystemUIFont",
   "buffer_line_height": {
     "custom": 1.7,
   },
