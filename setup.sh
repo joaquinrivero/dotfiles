@@ -6,10 +6,10 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OS="$(uname -s)"
 
 # Cross-platform: always stow (config is ready when app is installed)
-CORE_PACKAGES=(zsh git tmux starship gh misc direnv zed)
+CORE_PACKAGES=(zsh git tmux gh misc direnv zed)
 
 # macOS-only apps
-MAC_PACKAGES=(aerospace sketchybar hammerspoon warp cursor)
+MAC_PACKAGES=(aerospace warp cursor)
 
 # Ensure Homebrew is on PATH (Apple Silicon puts it at /opt/homebrew)
 if [[ -x /opt/homebrew/bin/brew ]]; then
@@ -43,7 +43,6 @@ CONFLICTING_FILES=(
     "$HOME/.editorconfig"
     "$HOME/.curlrc"
     "$HOME/.hushlogin"
-    "$HOME/.config/starship.toml"
     "$HOME/.config/tmux/tmux.reset.conf"
     "$HOME/.config/git/ignore"
     "$HOME/.config/gh/config.yml"
@@ -53,8 +52,6 @@ CONFLICTING_FILES=(
 if [[ "$OS" == "Darwin" ]]; then
     CONFLICTING_FILES+=(
         "$HOME/.config/aerospace/aerospace.toml"
-        "$HOME/.config/sketchybar"
-        "$HOME/.config/hammerspoon"
         "$HOME/.warp/settings.toml"
         "$HOME/Library/Application Support/Cursor/User/settings.json"
     )
@@ -84,7 +81,7 @@ if [ "$HAS_CONFLICTS" = true ]; then
 fi
 
 # Step 2b: Install required CLI tools
-CLI_TOOLS=(eza bat fzf zoxide starship tmux)
+CLI_TOOLS=(eza bat fzf zoxide tmux)
 echo "Checking CLI tools..."
 MISSING_TOOLS=()
 for tool in "${CLI_TOOLS[@]}"; do

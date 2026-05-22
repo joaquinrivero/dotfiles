@@ -34,9 +34,6 @@ Claude reads `CLAUDE.md` and knows how to configure identity files, install miss
 | `git` | `.gitconfig`, `.gitattributes`, `.config/git/ignore` |
 | `tmux` | `.tmux.conf`, `.config/tmux/tmux.reset.conf` |
 | `aerospace` | AeroSpace tiling window manager |
-| `sketchybar` | Custom macOS menu bar |
-| `hammerspoon` | macOS automation (Spoons included) |
-| `starship` | Cross-shell prompt (Catppuccin Mocha) |
 | `gh` | GitHub CLI config |
 | `misc` | `.editorconfig`, `.curlrc`, `.hushlogin` |
 | `direnv` | Per-directory `GH_TOKEN` for `gh` CLI (corp → `jrivero_adobe`, oss → `joaquinrivero`) |
