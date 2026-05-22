@@ -127,6 +127,16 @@ if [[ "$OS" == "Darwin" ]]; then
     envsubst < "$DOTFILES_DIR/warp/.warp/settings.toml.template" > "$HOME/.warp/settings.toml"
     echo "  Written: ~/.warp/settings.toml"
     echo ""
+
+    # Install Zed CLI if Zed is installed but CLI symlink is missing
+    ZED_CLI="/Applications/Zed.app/Contents/MacOS/cli"
+    ZED_LINK="$HOME/.local/bin/zed"
+    if [ -f "$ZED_CLI" ] && [ ! -e "$ZED_LINK" ]; then
+        echo "Linking Zed CLI..."
+        mkdir -p "$HOME/.local/bin"
+        ln -sf "$ZED_CLI" "$ZED_LINK"
+        echo "  Linked: zed → $ZED_CLI"
+    fi
 fi
 
 # Step 4: Fonts
