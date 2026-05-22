@@ -6,7 +6,7 @@ macOS dotfiles managed with GNU Stow. Each top-level directory is a stow package
 
 ## Packages
 
-zsh, git, tmux, starship, aerospace, sketchybar, hammerspoon, gh, misc
+zsh, git, tmux, aerospace, gh, misc
 
 ## First-time setup
 
@@ -18,7 +18,7 @@ When helping a user set up these dotfiles for the first time:
 4. **Local git identity** — If they only need a personal identity (no enterprise), create `~/.gitconfig.local` with `[user] name` and `email`.
 5. **Private env** — Create `~/.env.private` for tokens and secrets (sourced by `.zshrc`, gitignored).
 6. **Shell plugins** — zsh-autosuggestions and zsh-syntax-highlighting are expected under `~/.oh-my-zsh/custom/plugins/`. Guide installation if missing.
-7. **CLI tools** — The config assumes: eza, bat, fzf, zoxide, starship. Offer to install any that are missing via `brew install`.
+7. **CLI tools** — The config assumes: eza, bat, fzf, zoxide. Offer to install any that are missing via `brew install`.
 
 ## Key conventions
 
