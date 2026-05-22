@@ -81,7 +81,7 @@ system_theme = false
 theme = {
   custom = {
     name = "Catppuccin Mocha",
-    path = "~/.warp/themes/catppuccin_mocha.yml",
+    path = "/Users/rivero/.warp/themes/catppuccin_mocha.yml",
   },
 }
 
