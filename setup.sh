@@ -133,7 +133,14 @@ if [[ "$OS" == "Darwin" ]]; then
 elif [[ "$OS" == "Linux" ]]; then
     if ! fc-list 2>/dev/null | grep -qi "Hack Nerd Font"; then
         echo "Installing Hack Nerd Font..."
-        brew install --cask font-hack-nerd-font
+        FONT_VERSION="v3.2.1"
+        FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/${FONT_VERSION}/Hack.zip"
+        FONT_DIR="$HOME/.local/share/fonts"
+        mkdir -p "$FONT_DIR"
+        curl -fsSL "$FONT_URL" -o /tmp/HackNerdFont.zip && \
+            unzip -o /tmp/HackNerdFont.zip -d "$FONT_DIR" '*.ttf' && \
+            fc-cache -fv && \
+            rm /tmp/HackNerdFont.zip
     else
         echo "Hack Nerd Font already installed — skipping."
     fi

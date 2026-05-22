@@ -142,8 +142,6 @@ setopt EXTENDED_HISTORY HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_IGNORE_SPAC
 # ============================================
 # Local overrides
 # ============================================
-# Figma CLI
-alias fig-start='/Users/rivero/ai/figma-cli/bin/fig-start'
 
 # zoxide must be initialized last
 export _ZO_DOCTOR=0
