@@ -1,8 +1,8 @@
 {
   "window.commandCenter": true,
-  "editor.fontFamily": "Hack Nerd Font Mono",
-  "editor.fontSize": 18,
   "window.zoomLevel": 1,
+  "editor.fontFamily": "Hack Nerd Font Mono",
+  "editor.fontSize": 16,
   "terminal.integrated.fontFamily": "Hack Nerd Font Mono",
   "security.workspace.trust.enabled": true,
   "workbench.colorTheme": "Catppuccin Mocha"
