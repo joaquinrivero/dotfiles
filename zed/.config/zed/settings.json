@@ -27,7 +27,7 @@
       "provider": "openai-subscribed",
       "model": "gpt-5.2",
       "enable_thinking": true,
-      "effort": "medium"
+      "effort": "medium",
     },
     "dock": "right",
     "favorite_models": [],
@@ -54,7 +54,7 @@
     "dock": "left",
     "button": true,
   },
-  "ui_font_family": ".SystemUIFont",
+  "ui_font_family": "Hack Nerd Font",
   "buffer_line_height": {
     "custom": 1.7,
   },
@@ -73,8 +73,8 @@
     },
   },
   "base_keymap": "VSCode",
-  "ui_font_size": 18.0,
-  "buffer_font_size": 18.0,
+  "ui_font_size": 21.0,
+  "buffer_font_size": 16.0,
   "theme": {
     "mode": "system",
     "light": "Catppuccin Mocha",
