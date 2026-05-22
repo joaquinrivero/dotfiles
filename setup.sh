@@ -154,16 +154,19 @@ elif [[ "$OS" == "Linux" ]]; then
     fi
 fi
 
-# Step 5: Terminal theme
+# Step 5: Terminal settings
 echo ""
-echo "=== Terminal Theme ==="
-TERMINAL_THEME="$DOTFILES_DIR/terminal/catppuccin-mocha.terminal"
-if [ -f "$TERMINAL_THEME" ]; then
-    echo "Importing Catppuccin Mocha terminal theme..."
-    open "$TERMINAL_THEME"
-    echo "  Theme imported. Set it as default in Terminal > Preferences > Profiles."
+echo "=== Terminal Settings ==="
+TERMINAL_PLIST="$DOTFILES_DIR/terminal/terminal.plist"
+if [[ "$OS" == "Darwin" ]] && [ -f "$TERMINAL_PLIST" ]; then
+    echo "Importing Terminal preferences (theme, font, profile)..."
+    # Quit Terminal first so it doesn't overwrite the import on exit
+    osascript -e 'tell application "Terminal" to quit' 2>/dev/null || true
+    sleep 1
+    defaults import com.apple.Terminal "$TERMINAL_PLIST"
+    echo "  Done. Reopen Terminal to see the changes."
 else
-    echo "Terminal theme not found at $TERMINAL_THEME — skipping."
+    echo "Terminal plist not found — skipping."
 fi
 
 # Step 6: Git identity setup
