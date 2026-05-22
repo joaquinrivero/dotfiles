@@ -121,6 +121,14 @@ echo ""
 echo "Verify with: ls -la ~/.zshrc ~/.gitconfig ~/.tmux.conf"
 echo ""
 
+# Step 3b: Render templated configs (envsubst replaces $HOME with the real path)
+if [[ "$OS" == "Darwin" ]]; then
+    echo "Rendering Warp settings template..."
+    envsubst < "$DOTFILES_DIR/warp/.warp/settings.toml.template" > "$HOME/.warp/settings.toml"
+    echo "  Written: ~/.warp/settings.toml"
+    echo ""
+fi
+
 # Step 4: Fonts
 echo "=== Fonts ==="
 if [[ "$OS" == "Darwin" ]]; then
