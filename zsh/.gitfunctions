@@ -3,18 +3,12 @@
 # Git Multi-Account Functions
 # ============================================
 
-# Clone an Adobe enterprise repo (auto-routes through enterprise SSH alias)
-# Usage: clone-adobe <repo> [org]
-#   org defaults to Adobe-acom
 # Clone an Adobe enterprise repo and inject adobe identity into local config
-# Usage: clone-adobe <repo> [org]
-#   org defaults to Adobe-acom
+# Usage: clone-adobe <repo> [org]  (org defaults to Adobe-acom)
 clone-adobe() {
     local repo=${1:?'usage: clone-adobe <repo> [org]'}
     local org=${2:-Adobe-acom}
-    git clone "git@github.com-enterprise:${org}/${repo}.git" && \
-        git -C "${repo%.git}" config include.path "~/.gitconfig.d/adobe.inc" && \
-        printf "Identity set → jrivero@adobe.com in %s\n" "${repo%.git}"
+    git clone "git@github.com-enterprise:${org}/${repo}.git" && git-make-adobe "${repo%.git}"
 }
 
 # Retrofit an existing enterprise repo with the adobe identity include

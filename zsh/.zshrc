@@ -72,11 +72,15 @@ export BAT_THEME="TwoDark"
 # NVM (Lazy Load)
 # ============================================
 export NVM_DIR="$HOME/.nvm"
-nvm()  { unset -f nvm node npm npx pi; [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"; nvm "$@" }
-node() { unset -f nvm node npm npx pi; [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; node "$@" }
-npm()  { unset -f nvm node npm npx pi; [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; npm "$@" }
-npx()  { unset -f nvm node npm npx pi; [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; npx "$@" }
-pi()   { unset -f nvm node npm npx pi; [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; pi "$@" }
+_nvm_load() {
+    unset -f nvm node npm npx pi
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
+for _nvm_cmd in nvm node npm npx pi; do
+    eval "${_nvm_cmd}() { _nvm_load; ${_nvm_cmd} \"\$@\"; }"
+done
+unset _nvm_cmd
 
 # ============================================
 # Bun
@@ -138,8 +142,6 @@ setopt EXTENDED_HISTORY HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_IGNORE_SPAC
 # ============================================
 # Local overrides
 # ============================================
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
 # Figma CLI
 alias fig-start='/Users/rivero/ai/figma-cli/bin/fig-start'
 
@@ -152,3 +154,6 @@ export PATH="$HOME/.grok/bin:$PATH"
 fpath=(~/.grok/completions/zsh $fpath)
 autoload -Uz compinit && compinit -C
 # <<< grok installer <<<
+
+# Device-specific overrides (not tracked in git)
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local

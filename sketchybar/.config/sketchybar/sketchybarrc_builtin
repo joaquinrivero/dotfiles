@@ -5,7 +5,7 @@ source "$HOME/.config/sketchybar/icons.sh"
 
 ITEM_DIR="$HOME/.config/sketchybar/items"
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
-FONT="SF Pro"
+FONT="Hack Nerd Font"
 PADDINGS=3
 SHADOW=on
 

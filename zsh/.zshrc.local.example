@@ -1,0 +1,20 @@
+# ~/.zshrc.local — device-specific config, not tracked in git
+#
+# Copy this file to ~/.zshrc.local and uncomment what applies to this machine.
+# Sourced at the end of ~/.zshrc, after all shared config and zoxide init.
+
+# --- Package manager completions ---
+# [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+# [ -f "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
+
+# --- Tool completions ---
+# [ -f "$HOME/.openclaw/completions/openclaw.zsh" ] && source "$HOME/.openclaw/completions/openclaw.zsh"
+
+# --- Machine-specific aliases ---
+# alias proj="cd /Volumes/Work/projects"
+
+# --- Work VPN / proxy settings ---
+# export HTTP_PROXY=http://proxy.corp:8080
+
+# --- Local PATH additions ---
+# export PATH="$HOME/bin:$PATH"
