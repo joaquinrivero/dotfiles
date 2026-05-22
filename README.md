@@ -69,6 +69,17 @@ stow -t ~ -R git
 cd ~/dotfiles && stow -t ~ */
 ```
 
+## Device-specific config
+
+Anything that belongs to one machine — tool completions, local paths, work proxies — goes in `~/.zshrc.local`. It is sourced at the very end of `.zshrc` and is never tracked in git.
+
+```bash
+cp ~/dotfiles/zsh/.zshrc.local.example ~/.zshrc.local
+# edit and uncomment what applies to this machine
+```
+
+This works the same on Linux — just create `~/.zshrc.local` with whatever is specific to that box.
+
 ## Adding a new package
 
 1. Create a directory matching the tool name

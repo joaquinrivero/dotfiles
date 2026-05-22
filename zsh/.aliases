@@ -23,16 +23,18 @@ alias dev="cd ~/Development"
 # ============================================
 
 if command -v eza &>/dev/null; then
-  alias ls='eza --icons --group-directories-first'
-  alias l='eza -l --icons --git --group-directories-first'
-  alias la='eza -la --icons --git --group-directories-first'
-  alias ll='eza -l --icons --git --header --group-directories-first'
-  alias lla='eza -la --icons --git --header --group-directories-first'
-  alias lt='eza --tree --level=2 --icons --git'
-  alias lta='eza --tree --level=2 --icons --git -a'
-  alias ltt='eza --tree --icons --git'
-  alias lsd='eza -lD --icons'
-  alias lsf='eza -lf --icons'
+    _EZA='eza --icons --group-directories-first'
+    alias ls="$_EZA"
+    alias l="$_EZA -l --git"
+    alias la="$_EZA -la --git"
+    alias ll="$_EZA -l --git --header"
+    alias lla="$_EZA -la --git --header"
+    alias lt='eza --tree --level=2 --icons --git'
+    alias lta='eza --tree --level=2 --icons --git -a'
+    alias ltt='eza --tree --icons --git'
+    alias lsd='eza -lD --icons'
+    alias lsf='eza -lf --icons'
+    unset _EZA
 fi
 
 # Alternative: If you prefer lsd over eza
@@ -191,47 +193,36 @@ fi
 # Utility Functions as Aliases
 # ============================================
 
-# Create and enter directory
-alias mkcd='function _mkcd(){ mkdir -p "$1" && cd "$1"; }; _mkcd'
+mkcd()   { mkdir -p "$1" && cd "$1"; }
+backup() { cp "$1" "$1.backup.$(date +%Y%m%d_%H%M%S)"; }
+cheat()  { curl "cheat.sh/$1"; }
 
-# Extract archives
-alias extract='function _extract(){
-    if [ -f $1 ]; then
-        case $1 in
-            *.tar.bz2)   tar xjf $1     ;;
-            *.tar.gz)    tar xzf $1     ;;
-            *.bz2)       bunzip2 $1     ;;
-            *.rar)       unrar e $1     ;;
-            *.gz)        gunzip $1      ;;
-            *.tar)       tar xf $1      ;;
-            *.tbz2)      tar xjf $1     ;;
-            *.tgz)       tar xzf $1     ;;
-            *.zip)       unzip $1       ;;
-            *.Z)         uncompress $1  ;;
-            *.7z)        7z x $1        ;;
-            *)     echo "Cannot extract $1" ;;
-        esac
-    else
-        echo "$1 is not a valid file"
-    fi
-}; _extract'
-
-# Quick backup
-alias backup='function _backup(){ cp "$1" "$1.backup.$(date +%Y%m%d_%H%M%S)"; }; _backup'
+extract() {
+    [ -f "$1" ] || { echo "$1 is not a valid file"; return 1; }
+    case $1 in
+        *.tar.bz2)  tar xjf "$1"    ;;
+        *.tar.gz)   tar xzf "$1"    ;;
+        *.bz2)      bunzip2 "$1"    ;;
+        *.rar)      unrar e "$1"    ;;
+        *.gz)       gunzip "$1"     ;;
+        *.tar)      tar xf "$1"     ;;
+        *.tbz2)     tar xjf "$1"    ;;
+        *.tgz)      tar xzf "$1"    ;;
+        *.zip)      unzip "$1"      ;;
+        *.Z)        uncompress "$1" ;;
+        *.7z)       7z x "$1"       ;;
+        *)          echo "Cannot extract $1" ;;
+    esac
+}
 
 # Weather
 alias weather='curl wttr.in'
 alias weatherfull='curl v2.wttr.in'
 
-# Cheat sheets
-alias cheat='function _cheat(){ curl "cheat.sh/$1"; }; _cheat'
-
 # ============================================
 # Terminal Enhancement
 # ============================================
 
-# Colors for grep
-alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
@@ -319,9 +310,6 @@ alias mv='mv -i'
 # Better ls colors for dark terminals
 export LSCOLORS='ExGxBxDxCxEgEdxbxgxcxd'
 export CLICOLOR=1
-
-# Bat theme (if using bat)
-export BAT_THEME="TwoDark"
 
 # FZF default options (if using fzf)
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --preview "bat --style=numbers --color=always {} 2>/dev/null || cat {}"'

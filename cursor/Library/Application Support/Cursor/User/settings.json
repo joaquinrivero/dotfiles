@@ -1,0 +1,6 @@
+{
+  "window.commandCenter": true,
+  "editor.fontFamily": "'Hack Nerd Font Mono', 'Courier New', monospace",
+  "editor.fontSize": 16,
+  "terminal.integrated.fontFamily": "Hack Nerd Font Mono"
+}

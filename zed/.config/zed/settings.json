@@ -54,19 +54,19 @@
     "dock": "left",
     "button": true,
   },
-  "ui_font_family": "MesloLGSDZ Nerd Font Mono",
+  "ui_font_family": "Hack Nerd Font",
   "buffer_line_height": {
     "custom": 1.7,
   },
   "proxy": "",
   "terminal": {
-    "font_family": "MesloLGSDZ Nerd Font Mono",
+    "font_family": "Hack Nerd Font Mono",
     "font_size": 18,
     "line_height": {
       "custom": 1.7,
     },
   },
-  "buffer_font_family": "MesloLGSDZ Nerd Font Mono",
+  "buffer_font_family": "Hack Nerd Font Mono",
   "agent_servers": {
     "claude-acp": {
       "type": "registry",

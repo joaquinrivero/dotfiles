@@ -2,7 +2,14 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(zsh git tmux starship aerospace sketchybar hammerspoon gh misc direnv zed)
+
+OS="$(uname -s)"
+
+# Cross-platform: always stow (config is ready when app is installed)
+CORE_PACKAGES=(zsh git tmux starship gh misc direnv zed)
+
+# macOS-only apps
+MAC_PACKAGES=(aerospace sketchybar hammerspoon warp cursor)
 
 # Ensure Homebrew is on PATH (Apple Silicon puts it at /opt/homebrew)
 if [[ -x /opt/homebrew/bin/brew ]]; then
@@ -16,12 +23,13 @@ echo "Dotfiles directory: $DOTFILES_DIR"
 echo ""
 
 # Step 1: Ensure stow is installed
+if ! command -v brew &> /dev/null; then
+    echo "ERROR: Homebrew not found. Install it first: https://brew.sh"
+    exit 1
+fi
+
 if ! command -v stow &> /dev/null; then
     echo "Installing GNU Stow via Homebrew..."
-    if ! command -v brew &> /dev/null; then
-        echo "ERROR: Homebrew not found. Install it first: https://brew.sh"
-        exit 1
-    fi
     brew install stow
 fi
 
@@ -36,13 +44,21 @@ CONFLICTING_FILES=(
     "$HOME/.curlrc"
     "$HOME/.hushlogin"
     "$HOME/.config/starship.toml"
-    "$HOME/.config/aerospace/aerospace.toml"
-    "$HOME/.config/sketchybar"
-    "$HOME/.config/hammerspoon"
     "$HOME/.config/tmux/tmux.reset.conf"
     "$HOME/.config/git/ignore"
     "$HOME/.config/gh/config.yml"
+    "$HOME/.config/zed/settings.json"
 )
+
+if [[ "$OS" == "Darwin" ]]; then
+    CONFLICTING_FILES+=(
+        "$HOME/.config/aerospace/aerospace.toml"
+        "$HOME/.config/sketchybar"
+        "$HOME/.config/hammerspoon"
+        "$HOME/.warp/settings.toml"
+        "$HOME/Library/Application Support/Cursor/User/settings.json"
+    )
+fi
 
 BACKUP_DIR="$HOME/.dotfiles-backup-$(date +%Y%m%d_%H%M%S)"
 HAS_CONFLICTS=false
@@ -88,6 +104,9 @@ echo ""
 # Step 3: Stow all packages
 echo ""
 echo "Stowing packages..."
+PACKAGES=("${CORE_PACKAGES[@]}")
+[[ "$OS" == "Darwin" ]] && PACKAGES+=("${MAC_PACKAGES[@]}")
+
 for pkg in "${PACKAGES[@]}"; do
     echo "  Stowing: $pkg"
     stow -d "$DOTFILES_DIR" -t "$HOME" "$pkg"
@@ -104,11 +123,20 @@ echo ""
 
 # Step 4: Fonts
 echo "=== Fonts ==="
-if ls ~/Library/Fonts/MesloLG*Nerd* &>/dev/null; then
-    echo "MesloLG Nerd Font already installed — skipping."
-else
-    echo "Installing MesloLG Nerd Font..."
-    brew install --cask font-meslo-lg-nerd-font
+if [[ "$OS" == "Darwin" ]]; then
+    if ! ls ~/Library/Fonts/HackNerdFont* &>/dev/null; then
+        echo "Installing Hack Nerd Font..."
+        brew install --cask font-hack-nerd-font
+    else
+        echo "Hack Nerd Font already installed — skipping."
+    fi
+elif [[ "$OS" == "Linux" ]]; then
+    if ! fc-list 2>/dev/null | grep -qi "Hack Nerd Font"; then
+        echo "Installing Hack Nerd Font..."
+        brew install --cask font-hack-nerd-font
+    else
+        echo "Hack Nerd Font already installed — skipping."
+    fi
 fi
 
 # Step 5: Terminal theme
