@@ -161,6 +161,9 @@
 [url "git@github.com-enterprise:Adobe-"]
 	insteadOf = "git@github.com:Adobe-"
 
+[url "git@github.com-enterprise:OneAdobe/"]
+	insteadOf = "git@github.com:OneAdobe/"
+
 [url "git@github.com:"]
 
 	insteadOf = "gh:"
