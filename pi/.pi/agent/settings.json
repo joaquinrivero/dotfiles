@@ -1,0 +1,22 @@
+{
+  "lastChangelogVersion": "0.80.3",
+  "defaultProvider": "adobe",
+  "defaultModel": "claude-opus-4-8",
+  "packages": [
+    "git:github.com/coctostan/pi-superpowers",
+    "npm:pi-cursor-sdk",
+    "git:github.com/otahontas/pi-coding-agent-catppuccin",
+    "~/src/agentics/extensions/slicc-adobe",
+    "~/src/agentics/extensions/ponytail",
+    "~/src/adobe/corp/pinata-pi"
+  ],
+  "skills": [
+    "~/src/agentics/skills"
+  ],
+  "theme": "catppuccin-mocha",
+  "images": {
+    "blockImages": false
+  },
+  "defaultThinkingLevel": "medium",
+  "extensions": []
+}
