@@ -192,3 +192,15 @@ else
         "$DOTFILES_DIR/git/setup-identity.sh"
     fi
 fi
+
+# Step 7: Agentics skills repo + credentials
+echo ""
+echo "=== Agentics Setup ==="
+if [ -d "$HOME/src/agentics/.git" ] && [ -f "$HOME/.agentics/credentials" ]; then
+    echo "Skills repo and credentials already present — skipping."
+else
+    read -rp "Set up agentics skills repo and credentials now? [y/N] " answer
+    if [[ "$answer" =~ ^[Yy]$ ]]; then
+        "$DOTFILES_DIR/agentics/setup-agentics.sh"
+    fi
+fi

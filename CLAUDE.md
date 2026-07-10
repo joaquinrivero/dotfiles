@@ -17,6 +17,7 @@ When helping a user set up these dotfiles for the first time:
 3. **Git identity** — Run `./git/setup-identity.sh` to generate personal and Adobe enterprise `.inc` files and the commit template. The `.inc` files are gitignored; only `.example` templates are tracked.
 4. **Local git identity** — If they only need a personal identity (no enterprise), create `~/.gitconfig.local` with `[user] name` and `email`.
 5. **Private env** — Create `~/.env.private` for tokens and secrets (sourced by `.zshrc`, gitignored).
+5b. **Agentics** — Run `./agentics/setup-agentics.sh` to clone the skills repo to `~/src/agentics` (pi reads skills/extensions from there) and generate `~/.agentics/credentials` for the wiki/jira skills. The credentials file is chmod 600 and lives outside the repo; only `agentics/credentials.example` is tracked.
 6. **Shell plugins** — zsh-autosuggestions and zsh-syntax-highlighting are expected under `~/.oh-my-zsh/custom/plugins/`. Guide installation if missing.
 7. **CLI tools** — The config assumes: eza, bat, fzf, zoxide. Offer to install any that are missing via `brew install`.
 
