@@ -225,8 +225,8 @@
 	hunk-header-line-number-style = bold "#a6adc8"
 	hunk-header-style = file line-number syntax
 	line-numbers-left-style = "#6c7086"
-	line-numbers-minus-style = bold "#f38ba8"
-	line-numbers-plus-style = bold "#a6e3a1"
+	line-numbers-minus-style = bold "#f38ba8" "#1e1e2e"
+	line-numbers-plus-style = bold "#a6e3a1" "#1e1e2e"
 	line-numbers-right-style = "#6c7086"
 	line-numbers-zero-style = "#6c7086"
 	minus-emph-style = bold syntax "#694559"
