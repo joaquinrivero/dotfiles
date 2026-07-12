@@ -86,8 +86,8 @@ keybindings:
         - key: C
           name: review
           command: >
-            tmux new-window -n "review-{{.PrNumber}}"
-            'pi "Review PR #{{.PrNumber}} in {{.RepoName}}. Fetch the diff with: gh pr diff {{.PrNumber}} -R {{.RepoName}}. Then give a concise review — bugs, risks, style — pointing at file:line."'
+            herdr agent start "review-{{.PrNumber}}"
+            -- pi "Review PR #{{.PrNumber}} in {{.RepoName}}. Fetch the diff with: gh pr diff {{.PrNumber}} -R {{.RepoName}}. Then give a concise review — bugs, risks, style — pointing at file:line."
 repoPaths: {}
 theme:
     colors:
