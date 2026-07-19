@@ -196,7 +196,7 @@ fi
 # Step 7: Agentics skills (pi reads them from ~/src/agentics)
 echo ""
 echo "=== Agentics Setup ==="
-[ -d "$HOME/src/agentics/.git" ] || gh repo clone joaquinrivero/agentics-skills "$HOME/src/agentics"
+[ -d "$HOME/src/agentics/.git" ] || git clone https://github.com/joaquinrivero/agentics-skills.git "$HOME/src/agentics"
 if [ ! -f "$HOME/.agentics/credentials" ]; then
     mkdir -p "$HOME/.agentics" && umask 077
     printf 'JIRA_URL=\nJIRA_PAT=\nADOBE_WIKI_URL=\nADOBE_WIKI_PAT=\n' > "$HOME/.agentics/credentials"
