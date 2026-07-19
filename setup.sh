@@ -193,14 +193,12 @@ else
     fi
 fi
 
-# Step 7: Agentics skills repo + credentials
+# Step 7: Agentics skills (pi reads them from ~/src/agentics)
 echo ""
 echo "=== Agentics Setup ==="
-if [ -d "$HOME/src/agentics/.git" ] && [ -f "$HOME/.agentics/credentials" ]; then
-    echo "Skills repo and credentials already present — skipping."
-else
-    read -rp "Set up agentics skills repo and credentials now? [y/N] " answer
-    if [[ "$answer" =~ ^[Yy]$ ]]; then
-        "$DOTFILES_DIR/agentics/setup-agentics.sh"
-    fi
+[ -d "$HOME/src/agentics/.git" ] || git clone git@github.com:joaquinrivero/agentics-skills.git "$HOME/src/agentics"
+if [ ! -f "$HOME/.agentics/credentials" ]; then
+    mkdir -p "$HOME/.agentics" && umask 077
+    printf 'JIRA_URL=\nJIRA_PAT=\nADOBE_WIKI_URL=\nADOBE_WIKI_PAT=\n' > "$HOME/.agentics/credentials"
+    echo "Created ~/.agentics/credentials — fill in the PATs for the wiki/jira skills."
 fi
