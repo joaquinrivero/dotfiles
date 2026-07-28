@@ -9,7 +9,7 @@ OS="$(uname -s)"
 CORE_PACKAGES=(zsh git tmux gh misc direnv zed)
 
 # macOS-only apps
-MAC_PACKAGES=(aerospace warp cursor)
+MAC_PACKAGES=(aerospace warp cursor spicetify)
 
 # Ensure Homebrew is on PATH (Apple Silicon puts it at /opt/homebrew)
 if [[ -x /opt/homebrew/bin/brew ]]; then
@@ -158,6 +158,26 @@ elif [[ "$OS" == "Linux" ]]; then
             rm /tmp/HackNerdFont.zip
     else
         echo "Hack Nerd Font already installed — skipping."
+    fi
+fi
+
+# Step 4b: Spicetify (macOS) — install CLI if missing, apply theme if Spotify is present
+if [[ "$OS" == "Darwin" ]]; then
+    echo ""
+    echo "=== Spicetify ==="
+    if ! command -v spicetify &>/dev/null && [ ! -x "$HOME/.local/bin/spicetify" ]; then
+        echo "Installing spicetify CLI..."
+        curl -fsSL https://raw.githubusercontent.com/spicetify/cli/main/install.sh | sh
+    else
+        echo "spicetify already installed — skipping."
+    fi
+    SPICETIFY="$(command -v spicetify || echo "$HOME/.local/bin/spicetify")"
+    # Config is stowed via the spicetify package; apply only if Spotify has been run once.
+    if [ -x "$SPICETIFY" ] && [ -d "$HOME/Library/Application Support/Spotify/Apps" ]; then
+        echo "Applying spicetify theme..."
+        "$SPICETIFY" backup apply || echo "  spicetify apply failed — run Spotify once, then: spicetify backup apply"
+    else
+        echo "  Spotify not set up yet — launch it once, then run: spicetify backup apply"
     fi
 fi
 
