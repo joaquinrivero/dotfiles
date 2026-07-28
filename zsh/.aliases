@@ -11,7 +11,7 @@ alias ~="cd ~"
 alias -- -="cd -"
 
 # Quick directory access
-alias web="cd ~/web"
+
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/projects"

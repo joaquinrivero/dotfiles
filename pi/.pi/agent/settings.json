@@ -1,10 +1,9 @@
 {
-  "lastChangelogVersion": "0.80.3",
+  "lastChangelogVersion": "0.82.0",
   "defaultProvider": "adobe",
   "defaultModel": "claude-opus-4-8",
   "packages": [
     "git:github.com/coctostan/pi-superpowers",
-    "npm:pi-cursor-sdk",
     "git:github.com/otahontas/pi-coding-agent-catppuccin",
     "~/src/agentics/extensions/slicc-adobe",
     "~/src/agentics/extensions/ponytail",
@@ -17,6 +16,16 @@
   "images": {
     "blockImages": false
   },
-  "defaultThinkingLevel": "medium",
-  "extensions": []
+  "defaultThinkingLevel": "high",
+  "extensions": [],
+  "enabledModels": [
+    "adobe/claude-opus-4-8",
+    "adobe/claude-sonnet-5",
+    "opencode/big-pickle",
+    "anthropic/claude-fable-5",
+    "anthropic/claude-haiku-4-5",
+    "anthropic/claude-opus-4-8",
+    "opencode/claude-opus-5",
+    "anthropic/claude-sonnet-5"
+  ]
 }

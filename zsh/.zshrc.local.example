@@ -7,9 +7,6 @@
 # [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 # [ -f "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
 
-# --- Tool completions ---
-# [ -f "$HOME/.openclaw/completions/openclaw.zsh" ] && source "$HOME/.openclaw/completions/openclaw.zsh"
-
 # --- Machine-specific aliases ---
 # alias proj="cd /Volumes/Work/projects"
 

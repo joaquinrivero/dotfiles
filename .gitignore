@@ -6,6 +6,8 @@
 *.swp
 *.swo
 *~
+.vscode/
+.cursor/
 
 # Secrets
 .env.private
