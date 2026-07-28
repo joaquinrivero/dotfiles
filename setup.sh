@@ -52,6 +52,8 @@ CONFLICTING_FILES=(
 if [[ "$OS" == "Darwin" ]]; then
     CONFLICTING_FILES+=(
         "$HOME/.config/aerospace/aerospace.toml"
+        "$HOME/.config/spicetify/config-xpui.ini"
+        "$HOME/.config/spicetify/Themes/catppuccin"
         "$HOME/.warp/settings.toml"
         "$HOME/Library/Application Support/Cursor/User/settings.json"
     )
@@ -60,8 +62,15 @@ fi
 BACKUP_DIR="$HOME/.dotfiles-backup-$(date +%Y%m%d_%H%M%S)"
 HAS_CONFLICTS=false
 
+is_managed_by_dotfiles() {
+    local path="$1"
+    local resolved
+    resolved="$(realpath "$path" 2>/dev/null || true)"
+    [[ -n "$resolved" && "$resolved" == "$DOTFILES_DIR"/* ]]
+}
+
 for f in "${CONFLICTING_FILES[@]}"; do
-    if [ -e "$f" ] && [ ! -L "$f" ]; then
+    if [ -e "$f" ] && [ ! -L "$f" ] && ! is_managed_by_dotfiles "$f"; then
         HAS_CONFLICTS=true
         break
     fi
@@ -71,7 +80,7 @@ if [ "$HAS_CONFLICTS" = true ]; then
     echo "Backing up existing files to $BACKUP_DIR"
     mkdir -p "$BACKUP_DIR"
     for f in "${CONFLICTING_FILES[@]}"; do
-        if [ -e "$f" ] && [ ! -L "$f" ]; then
+        if [ -e "$f" ] && [ ! -L "$f" ] && ! is_managed_by_dotfiles "$f"; then
             REL_PATH="${f#$HOME/}"
             mkdir -p "$BACKUP_DIR/$(dirname "$REL_PATH")"
             mv "$f" "$BACKUP_DIR/$REL_PATH"
@@ -118,11 +127,19 @@ echo ""
 echo "Verify with: ls -la ~/.zshrc ~/.gitconfig ~/.tmux.conf"
 echo ""
 
-# Step 3b: Render templated configs (envsubst replaces $HOME with the real path)
+render_home_template() {
+    local template="$1"
+    local target="$2"
+    mkdir -p "$(dirname "$target")"
+    perl -pe 's/\$\{HOME\}|\$HOME/$ENV{HOME}/g' "$template" > "$target"
+    echo "  Written: ${target#$HOME/}"
+}
+
+# Step 3b: Render templated configs
 if [[ "$OS" == "Darwin" ]]; then
-    echo "Rendering Warp settings template..."
-    envsubst < "$DOTFILES_DIR/warp/.warp/settings.toml.template" > "$HOME/.warp/settings.toml"
-    echo "  Written: ~/.warp/settings.toml"
+    echo "Rendering templated configs..."
+    render_home_template "$DOTFILES_DIR/warp/.warp/settings.toml.template" "$HOME/.warp/settings.toml"
+    render_home_template "$DOTFILES_DIR/spicetify/.config/spicetify/config-xpui.ini.template" "$HOME/.config/spicetify/config-xpui.ini"
     echo ""
 
     # Install Zed CLI if Zed is installed but CLI symlink is missing

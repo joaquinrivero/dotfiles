@@ -155,3 +155,5 @@ autoload -Uz compinit && compinit -C
 
 # Device-specific overrides (not tracked in git)
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+export PATH="$PATH:$HOME/.spicetify"
