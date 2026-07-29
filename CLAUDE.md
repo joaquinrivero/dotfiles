@@ -6,7 +6,7 @@ macOS dotfiles managed with GNU Stow. Each top-level directory is a stow package
 
 ## Packages
 
-zsh, git, tmux, aerospace, gh, misc
+zsh, git, aerospace, gh, misc
 
 ## First-time setup
 

@@ -32,7 +32,6 @@ Claude reads `CLAUDE.md` and handles identity files, missing CLI tools, and shel
 |---------|----------------|
 | `zsh` | `.zshrc`, `.aliases` |
 | `git` | `.gitconfig`, `.gitattributes`, `.config/git/ignore` |
-| `tmux` | `.tmux.conf`, `.config/tmux/tmux.reset.conf` |
 | `aerospace` | AeroSpace tiling window manager |
 | `zed` | Zed editor settings and Catppuccin theme |
 | `warp` | Warp terminal settings |

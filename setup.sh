@@ -6,7 +6,7 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OS="$(uname -s)"
 
 # Cross-platform: always stow (config is ready when app is installed)
-CORE_PACKAGES=(zsh git tmux gh misc direnv zed)
+CORE_PACKAGES=(zsh git gh misc direnv zed)
 
 # macOS-only apps
 MAC_PACKAGES=(aerospace warp cursor spicetify)
@@ -39,11 +39,9 @@ CONFLICTING_FILES=(
     "$HOME/.aliases"
     "$HOME/.gitconfig"
     "$HOME/.gitattributes"
-    "$HOME/.tmux.conf"
     "$HOME/.editorconfig"
     "$HOME/.curlrc"
     "$HOME/.hushlogin"
-    "$HOME/.config/tmux/tmux.reset.conf"
     "$HOME/.config/git/ignore"
     "$HOME/.config/gh/config.yml"
     "$HOME/.config/zed/settings.json"
@@ -90,7 +88,7 @@ if [ "$HAS_CONFLICTS" = true ]; then
 fi
 
 # Step 2b: Install required CLI tools
-CLI_TOOLS=(eza bat fzf zoxide tmux)
+CLI_TOOLS=(eza bat fzf zoxide)
 echo "Checking CLI tools..."
 MISSING_TOOLS=()
 for tool in "${CLI_TOOLS[@]}"; do
@@ -124,7 +122,7 @@ if [ "$HAS_CONFLICTS" = true ]; then
     echo "Backup of original files: $BACKUP_DIR"
 fi
 echo ""
-echo "Verify with: ls -la ~/.zshrc ~/.gitconfig ~/.tmux.conf"
+echo "Verify with: ls -la ~/.zshrc ~/.gitconfig"
 echo ""
 
 render_home_template() {
