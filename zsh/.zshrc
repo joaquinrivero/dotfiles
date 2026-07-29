@@ -4,7 +4,9 @@
 # Terminal Performance
 # ============================================
 export SHELL_SESSIONS_DISABLE=1
-export COLORTERM=truecolor
+# Apple's Terminal.app doesn't support 24-bit truecolor; claiming it does
+# makes truecolor-aware TUIs (e.g. Claude Code) emit escapes it renders wrong.
+[ "$TERM_PROGRAM" != "Apple_Terminal" ] && export COLORTERM=truecolor
 
 # ============================================
 # Completion Setup
