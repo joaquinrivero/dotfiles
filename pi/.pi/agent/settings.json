@@ -1,13 +1,11 @@
 {
-  "lastChangelogVersion": "0.82.0",
+  "lastChangelogVersion": "0.83.0",
   "defaultProvider": "adobe",
   "defaultModel": "claude-opus-4-8",
   "packages": [
-    "git:github.com/coctostan/pi-superpowers",
-    "git:github.com/otahontas/pi-coding-agent-catppuccin",
     "~/src/agentics/extensions/slicc-adobe",
     "~/src/agentics/extensions/ponytail",
-    "~/src/adobe/corp/pinata-pi"
+    "~/src/agentics/extensions/rivero"
   ],
   "skills": [
     "~/src/agentics/skills"
