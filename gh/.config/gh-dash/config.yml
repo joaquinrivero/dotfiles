@@ -83,6 +83,12 @@ defaults:
     refetchIntervalMinutes: 30
 keybindings:
     prs:
+        - key: d
+          name: diff (no dist)
+          command: >
+            gh pr diff {{.PrNumber}} -R {{.RepoName}} |
+            awk '/^diff --git/{skip=($0 ~ /dist\//)} !skip' |
+            diffnav
         - key: C
           name: review
           command: >
