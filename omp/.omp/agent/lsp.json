@@ -1,0 +1,16 @@
+{
+  "servers": {
+    "typescript-language-server": {
+      "command": "/opt/homebrew/bin/typescript-language-server"
+    },
+    "eslint": {
+      "command": "/opt/homebrew/bin/vscode-eslint-language-server"
+    },
+    "vscode-html-language-server": {
+      "command": "/opt/homebrew/bin/vscode-html-language-server"
+    },
+    "vscode-json-language-server": {
+      "command": "/opt/homebrew/bin/vscode-json-language-server"
+    }
+  }
+}
