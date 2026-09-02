@@ -202,11 +202,8 @@ echo "=== Terminal Settings ==="
 TERMINAL_PLIST="$DOTFILES_DIR/terminal/terminal.plist"
 if [[ "$OS" == "Darwin" ]] && [ -f "$TERMINAL_PLIST" ]; then
     echo "Importing Terminal preferences (theme, font, profile)..."
-    # Quit Terminal first so it doesn't overwrite the import on exit
-    osascript -e 'tell application "Terminal" to quit' 2>/dev/null || true
-    sleep 1
     defaults import com.apple.Terminal "$TERMINAL_PLIST"
-    echo "  Done. Reopen Terminal to see the changes."
+    echo "  Done. Close and reopen Terminal to see the changes."
 else
     echo "Terminal plist not found — skipping."
 fi
