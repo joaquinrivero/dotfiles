@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.83.0",
+  "lastChangelogVersion": "0.84.4",
   "defaultProvider": "adobe",
   "defaultModel": "claude-opus-4-8",
   "packages": [
@@ -25,5 +25,9 @@
     "anthropic/claude-opus-4-8",
     "opencode/claude-opus-5",
     "anthropic/claude-sonnet-5"
-  ]
+  ],
+  "warnings": {
+    "anthropicExtraUsage": false
+  },
+  "tuiMode": "regular"
 }

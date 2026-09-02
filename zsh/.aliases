@@ -23,7 +23,7 @@ alias dev="cd ~/Development"
 # ============================================
 
 if command -v eza &>/dev/null; then
-    _EZA='eza --icons --group-directories-first'
+    _EZA='eza --icons --group-directories-first --color=always'
     alias ls="$_EZA"
     alias l="$_EZA -l --git"
     alias la="$_EZA -la --git"
