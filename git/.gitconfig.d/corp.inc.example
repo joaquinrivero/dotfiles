@@ -1,0 +1,5 @@
+# Identity for git.corp.adobe.com (internal GHE)
+# Copy to corp.inc and fill in your values, or run: ./git/setup-identity.sh
+[user]
+    name = Your Name
+    email = yourldap@adobe.com

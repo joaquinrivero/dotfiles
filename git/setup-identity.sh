@@ -38,4 +38,16 @@ EOF
 echo "Wrote $DIR/adobe.inc"
 
 echo ""
+echo "=== Adobe corp identity (git.corp.adobe.com) ==="
+read -rp "Name: " corp_name
+read -rp "Corporate email: " corp_email
+
+cat > "$DIR/corp.inc" <<EOF
+[user]
+    name = ${corp_name}
+    email = ${corp_email}
+EOF
+echo "Wrote $DIR/corp.inc"
+
+echo ""
 echo "Done. Identity files generated in $DIR"

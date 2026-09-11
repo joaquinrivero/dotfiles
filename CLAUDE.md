@@ -14,7 +14,7 @@ When helping a user set up these dotfiles for the first time:
 
 1. **Prerequisites** — Ensure Homebrew is installed. If not, guide them to install it.
 2. **Run `./setup.sh`** — This installs stow, backs up conflicting files, and symlinks all packages.
-3. **Git identity** — Run `./git/setup-identity.sh` to generate personal and Adobe enterprise `.inc` files and the commit template. The `.inc` files are gitignored; only `.example` templates are tracked.
+3. **Git identity** — Run `./git/setup-identity.sh` to generate personal, Adobe enterprise (`adobe.inc`), and Adobe corp (`corp.inc`) `.inc` files and the commit template. `.gitconfig` routes by path: `~/src/adobe/enterprise/` → enterprise, `~/src/adobe/corp/` → corp, everything else → personal. The `.inc` files are gitignored; only `.example` templates are tracked.
 4. **Local git identity** — If they only need a personal identity (no enterprise), create `~/.gitconfig.local` with `[user] name` and `email`.
 5. **Private env** — Create `~/.env.private` for tokens and secrets (sourced by `.zshrc`, gitignored).
 5b. **Agentics** — `setup.sh` clones the skills repo to `~/src/agentics` (pi reads skills/extensions from there) and stubs `~/.agentics/credentials`; fill in the wiki/jira PATs. That file lives outside the repo and is never committed.

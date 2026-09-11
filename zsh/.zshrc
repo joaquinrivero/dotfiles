@@ -65,18 +65,38 @@ export EZA_COLORS="di=38;5;183:ex=38;5;114"
 export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export EDITOR='/Applications/Cursor.app/Contents/MacOS/Cursor --wait'
-export VISUAL='/Applications/Cursor.app/Contents/MacOS/Cursor'
+export EDITOR='zed --wait'
+export VISUAL='zed --wait'
 export HOMEBREW_NO_ENV_HINTS=1
-export BAT_THEME="TwoDark"
+export BAT_THEME="Catppuccin Mocha"
 
 # ============================================
-# NVM (Disabled - use system Node)
+# NVM (lazy load — loads on first node/npm/npx/nvm use, not at startup)
+# Shims unset themselves before sourcing nvm.sh, so no recursion.
 # ============================================
-# NVM lazy-load has circular reference issues; using system Node instead
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+export NVM_DIR="$HOME/.nvm"
+_load_nvm() {
+  unset -f nvm node npm npx _load_nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  autoload -U add-zsh-hook
+  load-nvmrc() {
+    local nvmrc_path; nvmrc_path="$(nvm_find_nvmrc)"
+    if [ -n "$nvmrc_path" ]; then
+      local v; v=$(nvm version "$(cat "${nvmrc_path}")")
+      if [ "$v" = "N/A" ]; then nvm install
+      elif [ "$v" != "$(nvm version)" ]; then nvm use --silent; fi
+    elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+      nvm use default --silent
+    fi
+  }
+  add-zsh-hook chpwd load-nvmrc
+  load-nvmrc
+}
+nvm()  { _load_nvm; nvm "$@"; }
+node() { _load_nvm; node "$@"; }
+npm()  { _load_nvm; npm "$@"; }
+npx()  { _load_nvm; npx "$@"; }
 
 # ============================================
 # Bun
@@ -145,5 +165,3 @@ command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
 # Device-specific overrides (not tracked in git)
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
-export PATH="$PATH:$HOME/.spicetify"
