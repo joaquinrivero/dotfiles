@@ -213,10 +213,10 @@
 	trustExitCode = true
 [credential "https://github.com"]
 	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !gh auth git-credential
 [delta]
 	blame-palette = "#1e1e2e #181825 #11111b #313244 #45475a"
 	commit-decoration-style = "#6c7086" bold box ul

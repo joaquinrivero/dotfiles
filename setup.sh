@@ -6,7 +6,7 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OS="$(uname -s)"
 
 # Cross-platform: always stow (config is ready when app is installed)
-CORE_PACKAGES=(zsh git gh misc direnv zed)
+CORE_PACKAGES=(zsh git gh misc zed pi omp)
 
 # macOS-only apps
 MAC_PACKAGES=(aerospace warp cursor spicetify)
@@ -87,21 +87,42 @@ if [ "$HAS_CONFLICTS" = true ]; then
     done
 fi
 
-# Step 2b: Install required CLI tools
-CLI_TOOLS=(eza bat fzf zoxide)
+# Step 2b: Install required CLI tools (command:formula — differ for pi)
+CLI_TOOLS=(
+    "eza:eza"
+    "bat:bat"
+    "fzf:fzf"
+    "zoxide:zoxide"
+    "diffnav:diffnav"
+    "pi:pi-coding-agent"
+)
 echo "Checking CLI tools..."
-MISSING_TOOLS=()
-for tool in "${CLI_TOOLS[@]}"; do
-    if ! command -v "$tool" &>/dev/null; then
-        MISSING_TOOLS+=("$tool")
+MISSING_FORMULAE=()
+for entry in "${CLI_TOOLS[@]}"; do
+    cmd="${entry%%:*}"
+    formula="${entry#*:}"
+    if ! command -v "$cmd" &>/dev/null; then
+        MISSING_FORMULAE+=("$formula")
     fi
 done
 
-if [ ${#MISSING_TOOLS[@]} -gt 0 ]; then
-    echo "Installing missing tools: ${MISSING_TOOLS[*]}"
-    brew install "${MISSING_TOOLS[@]}"
+if [ ${#MISSING_FORMULAE[@]} -gt 0 ]; then
+    echo "Installing missing tools: ${MISSING_FORMULAE[*]}"
+    brew install "${MISSING_FORMULAE[@]}"
 else
     echo "All CLI tools already installed."
+fi
+
+# gh-dash ships as a gh extension, not a brew formula
+if command -v gh &>/dev/null && ! gh extension list 2>/dev/null | grep -q "dlvhdr/gh-dash"; then
+    echo "Installing gh-dash extension..."
+    gh extension install dlvhdr/gh-dash
+fi
+
+# omp (oh-my-pi, https://omp.sh) ships via its own install script, not brew
+if ! command -v omp &>/dev/null; then
+    echo "Installing omp..."
+    curl -fsSL https://omp.sh/install.sh | sh
 fi
 echo ""
 
@@ -140,8 +161,12 @@ if [[ "$OS" == "Darwin" ]]; then
     render_home_template "$DOTFILES_DIR/spicetify/.config/spicetify/config-xpui.ini.template" "$HOME/.config/spicetify/config-xpui.ini"
     echo ""
 
-    # Install Zed CLI if Zed is installed but CLI symlink is missing
+    # Install Zed if missing, then link its CLI
     ZED_CLI="/Applications/Zed.app/Contents/MacOS/cli"
+    if [ ! -d "/Applications/Zed.app" ] && command -v brew &>/dev/null; then
+        echo "Installing Zed..."
+        brew install --cask zed
+    fi
     ZED_LINK="$HOME/.local/bin/zed"
     if [ -f "$ZED_CLI" ] && [ ! -e "$ZED_LINK" ]; then
         echo "Linking Zed CLI..."
@@ -182,7 +207,7 @@ if [[ "$OS" == "Darwin" ]]; then
     echo "=== Spicetify ==="
     if ! command -v spicetify &>/dev/null && [ ! -x "$HOME/.local/bin/spicetify" ]; then
         echo "Installing spicetify CLI..."
-        curl -fsSL https://raw.githubusercontent.com/spicetify/cli/main/install.sh | sh
+        curl -fsSL https://raw.githubusercontent.com/spicetify/cli/main/install.sh | sh || echo "  spicetify CLI install skipped — install manually if needed."
     else
         echo "spicetify already installed — skipping."
     fi

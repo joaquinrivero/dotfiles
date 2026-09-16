@@ -92,8 +92,9 @@ keybindings:
         - key: C
           name: review
           command: >
-            herdr agent start "review-{{.PrNumber}}"
-            -- pi "Review PR #{{.PrNumber}} in {{.RepoName}}. Fetch the diff with: gh pr diff {{.PrNumber}} -R {{.RepoName}}. Then give a concise review — bugs, risks, style — pointing at file:line."
+            pane=$(herdr tab create --label "review-{{.PrNumber}}" --focus | jq -r .result.root_pane.pane_id) &&
+            herdr agent start "review-{{.PrNumber}}" --kind pi --pane "$pane" --timeout 60000
+            -- "Review PR #{{.PrNumber}} in {{.RepoName}}. Fetch the diff with: gh pr diff {{.PrNumber}} -R {{.RepoName}}. Then give a concise review — bugs, risks, style — pointing at file:line."
 repoPaths: {}
 theme:
     colors:

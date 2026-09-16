@@ -19,3 +19,34 @@ git/.gitconfig.d/adobe-commit-template.txt
 
 # Compiled binaries
 sketchybar/.config/sketchybar/helper/helper
+
+# Setup log
+install.log
+
+# omp agent runtime state (config.yml + lsp.json stay tracked)
+omp/.omp/agent/*.db
+omp/.omp/agent/*.db-shm
+omp/.omp/agent/*.db-wal
+omp/.omp/agent/*.lock
+omp/.omp/agent/blobs/
+omp/.omp/agent/cache/
+omp/.omp/agent/sessions/
+omp/.omp/agent/terminal-sessions/
+omp/.omp/agent/last-changelog-version
+omp/.omp/gpu_cache.json
+omp/.omp/install-id
+omp/.omp/logs/
+omp/.omp/natives/
+
+# pi agent runtime state (SYSTEM/APPEND_SYSTEM + settings.json stay tracked)
+pi/.pi/agent/auth.json
+pi/.pi/agent/models-store.json
+pi/.pi/agent/slicc-adobe-session.json
+pi/.pi/agent/bin/
+pi/.pi/agent/extensions/
+pi/.pi/agent/git/
+pi/.pi/agent/sessions/
+
+# App-rewritten runtime state (templates are the tracked source)
+warp/.warp/settings.toml
+zed/.config/zed/prompts/
