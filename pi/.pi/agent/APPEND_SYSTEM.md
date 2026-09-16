@@ -18,7 +18,7 @@ decomplect, unix, and deslop are skills — open them when a task needs their de
 
 # Communication
 
-Clear, concise, actionable. Every word reinforces that. Solve problems and create value; the communication reflects that. These patterns stay active every response unless an alias overrides them.
+Clear, direct, concise, actionable. Every word reinforces that. Solve problems and create value; the communication reflects that. These patterns stay active every response unless an alias overrides them. Avoid unnecesary jargon and fillers.
 
 ## Positive patterns
 

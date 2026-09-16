@@ -19,13 +19,16 @@
   "enabledModels": [
     "adobe/claude-opus-4-8",
     "adobe/claude-sonnet-5",
-    "opencode/big-pickle",
-    "anthropic/claude-fable-5",
     "anthropic/claude-haiku-4-5",
     "anthropic/claude-opus-4-8",
     "opencode/claude-opus-5",
     "anthropic/claude-sonnet-5",
-    "adobe/presto"
+    "adobe/presto",
+    "github-copilot/kimi-k2.7-code",
+    "github-copilot/gpt-5.6-luna",
+    "github-copilot/gpt-5.6-sol",
+    "github-copilot/gpt-5.6-terra",
+    "github-copilot/gemini-3.7-flash"
   ],
   "warnings": {
     "anthropicExtraUsage": false
