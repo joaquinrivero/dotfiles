@@ -5,7 +5,7 @@
 #   agentics-vault set-passphrase   # store the shared passphrase in this machine's Keychain (once)
 #   agentics-vault push      # encrypt file -> Vault
 #   agentics-vault pull      # Vault -> decrypt to file (default)
-# Requires: vault, gpg, security (macOS Keychain). Env overrides the defaults below.
+# Requires: vault, openssl, security (macOS Keychain). Env overrides the defaults below.
 set -euo pipefail
 
 export VAULT_ADDR="${VAULT_ADDR:-https://vault-amer.adobe.net}"
@@ -27,18 +27,29 @@ set_passphrase() {
   echo "stored in Keychain ($KC_SVC)"
 }
 
+# Encrypt/decrypt with an openssl that supports -pbkdf2 (system LibreSSL
+# often doesn't), picking a Homebrew build as fallback. Reads passphrase on fd 3.
+enc() {
+  local c
+  for c in openssl /opt/homebrew/opt/openssl@3/bin/openssl \
+           /usr/local/opt/openssl@3/bin/openssl /usr/bin/openssl; do
+    command -v "$c" >/dev/null 2>&1 \
+      && echo x | "$c" enc -aes-256-cbc -pbkdf2 -iter 1 -pass pass:x -a >/dev/null 2>&1 \
+      && { "$c" enc -aes-256-cbc -pbkdf2 -iter 200000 -salt -a -pass fd:3 "$@"; return; }
+  done
+  echo "no openssl with -pbkdf2 found; run: brew install openssl@3" >&2; exit 1
+}
+
 push() {
   [ -s "$CREDS" ] || { echo "nothing to push: $CREDS is empty/missing" >&2; exit 1; }
-  blob=$(gpg --batch --yes --symmetric --cipher-algo AES256 \
-      --passphrase-fd 3 --armor -o - "$CREDS" 3<<<"$(passphrase)")
+  blob=$(enc -in "$CREDS" 3<<<"$(passphrase)")
   vault kv put "$PATH_KV" blob="$blob"
   echo "pushed encrypted blob -> $PATH_KV"
 }
 
 pull() {
   umask 077; mkdir -p "$(dirname "$CREDS")"
-  vault kv get -field=blob "$PATH_KV" \
-    | gpg --batch --yes --decrypt --passphrase-fd 3 3<<<"$(passphrase)" > "$CREDS"
+  vault kv get -field=blob "$PATH_KV" | enc -d 3<<<"$(passphrase)" > "$CREDS"
   echo "pulled $(grep -c = "$CREDS") values -> $CREDS"
 }
 
@@ -48,7 +59,7 @@ usage() {
   cat <<EOF
 usage: $(basename "$0") [command]
 
-Sync ~/.agentics/credentials with Vault, gpg-encrypted client-side so the
+Sync ~/.agentics/credentials with Vault, AES-256 encrypted client-side so the
 Vault path never holds plaintext (safe on a group-readable mount).
 
 commands:
