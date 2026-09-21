@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 # Sync ~/.agentics/credentials with Vault, encrypted client-side so the
 # Vault path never holds plaintext (safe even on a group-readable mount).
+#   agentics-vault setup     # per-device bootstrap: vault login + store passphrase
 #   agentics-vault set-passphrase   # store the shared passphrase in this machine's Keychain (once)
-#   agentics-vault push       # encrypt file -> Vault
-#   agentics-vault pull       # Vault -> decrypt to file (default)
-# Requires: vault (logged in), gpg, security (macOS Keychain).
-# Env: VAULT_ADDR, VAULT_NAMESPACE (if any), VAULT_KV_PATH (default secret/agentics).
+#   agentics-vault push      # encrypt file -> Vault
+#   agentics-vault pull      # Vault -> decrypt to file (default)
+# Requires: vault, gpg, security (macOS Keychain). Env overrides the defaults below.
 set -euo pipefail
 
+export VAULT_ADDR="${VAULT_ADDR:-https://vault-amer.adobe.net}"
 CREDS="${AGENTICS_CREDENTIALS_FILE:-$HOME/.agentics/credentials}"
-PATH_KV="${VAULT_KV_PATH:-secret/agentics}"
+PATH_KV="${VAULT_KV_PATH:-cloudtech_wcms/jrivero/agentics}"
 KC_SVC="agentics-vault-key"          # Keychain item holding the passphrase
 
 passphrase() {
@@ -41,9 +42,12 @@ pull() {
   echo "pulled $(grep -c = "$CREDS") values -> $CREDS"
 }
 
+setup() { vault login -method=oidc -path=oidc && set_passphrase; }
+
 case "${1:-pull}" in
+  setup) setup ;;
   set-passphrase) set_passphrase ;;
   push) push ;;
   pull) pull ;;
-  *) echo "usage: $(basename "$0") [set-passphrase|push|pull]" >&2; exit 1 ;;
+  *) echo "usage: $(basename "$0") [setup|set-passphrase|push|pull]" >&2; exit 1 ;;
 esac
