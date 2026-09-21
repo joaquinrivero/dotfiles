@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# Sync ~/.agentics/credentials with Vault, encrypted client-side so the
+# Vault path never holds plaintext (safe even on a group-readable mount).
+#   agentics-vault set-passphrase   # store the shared passphrase in this machine's Keychain (once)
+#   agentics-vault push       # encrypt file -> Vault
+#   agentics-vault pull       # Vault -> decrypt to file (default)
+# Requires: vault (logged in), gpg, security (macOS Keychain).
+# Env: VAULT_ADDR, VAULT_NAMESPACE (if any), VAULT_KV_PATH (default secret/agentics).
+set -euo pipefail
+
+CREDS="${AGENTICS_CREDENTIALS_FILE:-$HOME/.agentics/credentials}"
+PATH_KV="${VAULT_KV_PATH:-secret/agentics}"
+KC_SVC="agentics-vault-key"          # Keychain item holding the passphrase
+
+passphrase() {
+  # Linux/VM fallback: no macOS Keychain, supply via env.
+  [ -n "${AGENTICS_VAULT_PASSPHRASE:-}" ] && { printf '%s' "$AGENTICS_VAULT_PASSPHRASE"; return; }
+  security find-generic-password -a "$USER" -s "$KC_SVC" -w 2>/dev/null \
+    || { echo "no passphrase: set AGENTICS_VAULT_PASSPHRASE or run: $(basename "$0") set-passphrase" >&2; exit 1; }
+}
+
+set_passphrase() {
+  # ponytail: prompt reads once; -U updates if the item already exists.
+  printf 'passphrase: ' >&2; read -rs pw; echo >&2
+  security add-generic-password -a "$USER" -s "$KC_SVC" -w "$pw" -U
+  echo "stored in Keychain ($KC_SVC)"
+}
+
+push() {
+  [ -s "$CREDS" ] || { echo "nothing to push: $CREDS is empty/missing" >&2; exit 1; }
+  blob=$(gpg --batch --yes --symmetric --cipher-algo AES256 \
+      --passphrase-fd 3 --armor -o - "$CREDS" 3<<<"$(passphrase)")
+  vault kv put "$PATH_KV" blob="$blob"
+  echo "pushed encrypted blob -> $PATH_KV"
+}
+
+pull() {
+  umask 077; mkdir -p "$(dirname "$CREDS")"
+  vault kv get -field=blob "$PATH_KV" \
+    | gpg --batch --yes --decrypt --passphrase-fd 3 3<<<"$(passphrase)" > "$CREDS"
+  echo "pulled $(grep -c = "$CREDS") values -> $CREDS"
+}
+
+case "${1:-pull}" in
+  set-passphrase) set_passphrase ;;
+  push) push ;;
+  pull) pull ;;
+  *) echo "usage: $(basename "$0") [set-passphrase|push|pull]" >&2; exit 1 ;;
+esac
