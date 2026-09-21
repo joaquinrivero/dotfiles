@@ -5,7 +5,8 @@
   "packages": [
     "~/src/agentics/extensions/slicc-adobe",
     "~/src/agentics/extensions/ponytail",
-    "~/src/agentics/extensions/rivero"
+    "~/src/agentics/extensions/rivero",
+    "npm:pi-mono-figma@0.2.2"
   ],
   "skills": [
     "~/src/agentics/skills"

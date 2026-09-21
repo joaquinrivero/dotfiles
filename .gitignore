@@ -50,3 +50,4 @@ pi/.pi/agent/sessions/
 # App-rewritten runtime state (templates are the tracked source)
 warp/.warp/settings.toml
 zed/.config/zed/prompts/
+pi/.pi/agent/npm/

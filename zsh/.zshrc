@@ -140,6 +140,15 @@ unset _ZSH_CUSTOM
 # ============================================
 cursor() { open -a "Cursor" "$@" }
 
+# Launch pi with the agentics vault loaded (scoped to pi's process only,
+# so FIGMA_TOKEN etc. reach extensions without polluting the shell env).
+pi() {
+  ( set -a
+    [ -f "$HOME/.agentics/credentials" ] && . "$HOME/.agentics/credentials"
+    set +a
+    exec command pi "$@" )
+}
+
 # ============================================
 # Aliases & Private Env
 # ============================================
@@ -165,3 +174,4 @@ command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
 # Device-specific overrides (not tracked in git)
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+export VAULT_ADDR=https://vault-amer.adobe.net
