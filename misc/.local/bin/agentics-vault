@@ -44,10 +44,34 @@ pull() {
 
 setup() { vault login -method=oidc -path=oidc && set_passphrase; }
 
+usage() {
+  cat <<EOF
+usage: $(basename "$0") [command]
+
+Sync ~/.agentics/credentials with Vault, gpg-encrypted client-side so the
+Vault path never holds plaintext (safe on a group-readable mount).
+
+commands:
+  setup            per-device bootstrap: vault login + store passphrase
+  set-passphrase   store the shared passphrase in this machine's Keychain
+  push             encrypt the credentials file -> Vault
+  pull             Vault -> decrypt to the credentials file (default)
+  -h, --help       show this help
+
+env:
+  VAULT_ADDR                  default https://vault-amer.adobe.net
+  VAULT_KV_PATH               default cloudtech_wcms/jrivero/agentics
+  VAULT_NAMESPACE             set if your path is in a namespace
+  AGENTICS_VAULT_PASSPHRASE   passphrase source on Linux/VMs (no Keychain)
+  AGENTICS_CREDENTIALS_FILE   default ~/.agentics/credentials
+EOF
+}
+
 case "${1:-pull}" in
   setup) setup ;;
   set-passphrase) set_passphrase ;;
   push) push ;;
   pull) pull ;;
-  *) echo "usage: $(basename "$0") [setup|set-passphrase|push|pull]" >&2; exit 1 ;;
+  -h|--help|help) usage ;;
+  *) usage >&2; exit 1 ;;
 esac
