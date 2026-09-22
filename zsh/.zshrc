@@ -11,10 +11,12 @@ export SHELL_SESSIONS_DISABLE=1
 # ============================================
 # Completion Setup
 # ============================================
+# brew prefix: /opt/homebrew on Apple Silicon, /usr/local on Intel
+brew_prefix=/opt/homebrew; [[ -d $brew_prefix ]] || brew_prefix=/usr/local
 # Fix: homebrew git completion calls pkg-config (12s timeout) — bypass it
-zstyle ':completion:*:*:git:*' script /opt/homebrew/share/zsh/site-functions/git-completion.bash
+zstyle ':completion:*:*:git:*' script $brew_prefix/share/zsh/site-functions/git-completion.bash
 
-fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+fpath=($brew_prefix/share/zsh/site-functions $fpath)
 autoload -Uz compinit
 # Rebuild dump once per day, use cache otherwise
 if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qNmh+24) ]]; then
