@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.4",
+  "lastChangelogVersion": "0.87.1",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-8",
   "packages": [
@@ -21,9 +21,6 @@
     "adobe/claude-opus-4-8",
     "adobe/claude-sonnet-5",
     "anthropic/claude-haiku-4-5",
-    "anthropic/claude-opus-4-8",
-    "opencode/claude-opus-5",
-    "anthropic/claude-sonnet-5",
     "adobe/presto",
     "github-copilot/kimi-k2.7-code",
     "github-copilot/gpt-5.6-luna",
