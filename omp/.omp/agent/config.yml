@@ -1,6 +1,7 @@
 setupVersion: 2
 disabledProviders:
   - claude
+  - anthropic
 modelRoles:
   default: adobe/presto
   plan: anthropic/claude-opus-4-8:high
@@ -13,9 +14,6 @@ modelRoles:
   advisor: anthropic/claude-haiku-4-5
   slow: openai/gpt-5.5:high
 enabledModels:
-  - anthropic/claude-opus-4-8
-  - anthropic/claude-sonnet-5
-  - anthropic/claude-haiku-4-5
   - adobe/claude-opus-4-8
   - adobe/claude-sonnet-5
   - adobe/claude-haiku-4-5
