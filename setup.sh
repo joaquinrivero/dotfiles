@@ -94,7 +94,6 @@ CLI_TOOLS=(
     "fzf:fzf"
     "zoxide:zoxide"
     "diffnav:diffnav"
-    "pi:pi-coding-agent"
 )
 echo "Checking CLI tools..."
 MISSING_FORMULAE=()
@@ -113,10 +112,24 @@ else
     echo "All CLI tools already installed."
 fi
 
+# gh (GitHub CLI) ships via its own release archive, not brew — no Intel
+# macOS bottle exists (arm64-only + linux), so brew would build it from source
+if ! command -v gh &>/dev/null; then
+    echo "Installing gh..."
+    GH_VERSION="2.101.0"
+    GH_ARCH="$([[ "$(uname -m)" == "arm64" ]] && echo arm64 || echo amd64)"
+    curl -fsSL -o /tmp/gh.zip "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_macOS_${GH_ARCH}.zip"
+    unzip -q -o /tmp/gh.zip -d /tmp/gh-extract
+    mkdir -p "$HOME/.local/bin"
+    cp "/tmp/gh-extract/gh_${GH_VERSION}_macOS_${GH_ARCH}/bin/gh" "$HOME/.local/bin/gh"
+    chmod +x "$HOME/.local/bin/gh"
+    rm -rf /tmp/gh.zip /tmp/gh-extract
+fi
+
 # gh-dash ships as a gh extension, not a brew formula
 if command -v gh &>/dev/null && ! gh extension list 2>/dev/null | grep -q "dlvhdr/gh-dash"; then
     echo "Installing gh-dash extension..."
-    gh extension install dlvhdr/gh-dash
+    gh extension install dlvhdr/gh-dash || echo "  gh-dash install failed — skipping, retry later with: gh extension install dlvhdr/gh-dash"
 fi
 
 # omp (oh-my-pi, https://omp.sh) ships via its own install script, not brew
@@ -124,13 +137,37 @@ if ! command -v omp &>/dev/null; then
     echo "Installing omp..."
     curl -fsSL https://omp.sh/install.sh | sh
 fi
+
+# pi (pi.dev) ships via its own install script, not brew — avoids node/go
+# rebuilds on Tier-3 platforms (e.g. Intel Macs post-Homebrew-4.6)
+if ! command -v pi &>/dev/null; then
+    echo "Installing pi..."
+    curl -fsSL https://pi.dev/install.sh | sh
+fi
+
+# uv (Python tool runner, required by jira-api-skill/wiki-api-skill) ships
+# via its own install script, not brew — same Tier-3 gap as pi/omp/gh
+if ! command -v uv &>/dev/null; then
+    echo "Installing uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
+
+# herdr (herdr.dev) ships via its own install script, not brew — same gap
+if ! command -v herdr &>/dev/null; then
+    echo "Installing herdr..."
+    curl -fsSL https://herdr.dev/install.sh | sh
+fi
 echo ""
 
 # Step 3: Stow all packages
 echo ""
 echo "Stowing packages..."
 PACKAGES=("${CORE_PACKAGES[@]}")
-[[ "$OS" == "Darwin" ]] && PACKAGES+=("${MAC_PACKAGES[@]}")
+# bash 3.2 (macOS default) treats "${arr[@]}" on an empty array as unbound
+# under `set -u`; guard with a length check before expanding it.
+if [[ "$OS" == "Darwin" ]] && [ ${#MAC_PACKAGES[@]} -gt 0 ]; then
+    PACKAGES+=("${MAC_PACKAGES[@]}")
+fi
 
 for pkg in "${PACKAGES[@]}"; do
     echo "  Stowing: $pkg"
