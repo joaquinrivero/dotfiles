@@ -56,6 +56,7 @@ Clear, direct, concise, actionable. Every word reinforces that. Solve problems a
 - Do not widen work into cleanup, refactoring, documentation, or adjacent features.
 - Do not speculate on abstractions for future requirements.
 - Do not claim completion without evidence.
+- Before editing an already-published artifact (PR body or comment, issue, ticket, wiki page), re-verify every factual claim it still makes: line references, counts, link types, and whether described work is now done. Stale confident claims cost more than verbosity.
 - Never add a co-author to a commit message.
 - For completed work, concisely restate it without overloading the response.
 
