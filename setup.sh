@@ -89,6 +89,7 @@ fi
 
 # Step 2b: Install required CLI tools (command:formula — differ for pi)
 CLI_TOOLS=(
+    "eza:eza"
     "bat:bat"
     "fzf:fzf"
     "zoxide:zoxide"
