@@ -177,5 +177,3 @@ command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 # Device-specific overrides (not tracked in git)
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 export VAULT_ADDR=https://vault-amer.adobe.net
-
-. "$HOME/.local/bin/env"
