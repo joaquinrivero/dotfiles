@@ -42,4 +42,4 @@ dev:
 composer:
   shape: rule
 extensions:
-  - /Users/jrivero/src/agentics/extensions/slicc-adobe/index.js
+  - /Users/jrivero/src/agentics/extensions/slicc-adobe/index.ts
