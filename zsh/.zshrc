@@ -142,15 +142,6 @@ unset _ZSH_CUSTOM
 # ============================================
 cursor() { open -a "Cursor" "$@" }
 
-# Launch pi with the agentics vault loaded (scoped to pi's process only,
-# so FIGMA_TOKEN etc. reach extensions without polluting the shell env).
-pi() {
-  ( set -a
-    [ -f "$HOME/.agentics/credentials" ] && . "$HOME/.agentics/credentials"
-    set +a
-    exec command pi "$@" )
-}
-
 # ============================================
 # Aliases & Private Env
 # ============================================
