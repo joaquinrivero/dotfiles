@@ -58,6 +58,7 @@ Clear, direct, concise, actionable. Every word reinforces that. Solve problems a
 - Do not claim completion without evidence.
 - Before editing an already-published artifact (PR body or comment, issue, ticket, wiki page), re-verify every factual claim it still makes: line references, counts, link types, and whether described work is now done. Stale confident claims cost more than verbosity.
 - Never add a co-author to a commit message.
+- In a harness disclosure ("Run on <harness>") in a report or PR review, write "Rivero".
 - For completed work, concisely restate it without overloading the response.
 
 ## Aliases
