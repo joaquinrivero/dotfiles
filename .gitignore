@@ -12,6 +12,7 @@
 # Secrets
 .env.private
 .gitconfig.local
+gh/.config/gh/hosts.yml
 
 # Generated identity files (use setup-identity.sh or copy from *.example)
 git/.gitconfig.d/*.inc
@@ -37,6 +38,11 @@ omp/.omp/gpu_cache.json
 omp/.omp/install-id
 omp/.omp/logs/
 omp/.omp/natives/
+omp/.omp/agent/custom-session-files/
+omp/.omp/agent/extensions/
+omp/.omp/cache/
+omp/.omp/plugins/
+omp/.omp/run/
 
 # pi agent runtime state (SYSTEM/APPEND_SYSTEM + settings.json stay tracked)
 pi/.pi/agent/auth.json
@@ -46,6 +52,7 @@ pi/.pi/agent/bin/
 pi/.pi/agent/extensions/
 pi/.pi/agent/git/
 pi/.pi/agent/sessions/
+pi/.pi/agent/crashes.json
 
 # App-rewritten runtime state (templates are the tracked source)
 warp/.warp/settings.toml
