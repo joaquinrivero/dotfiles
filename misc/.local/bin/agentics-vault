@@ -5,7 +5,7 @@
 #   agentics-vault set-passphrase   # store the shared passphrase in this machine's Keychain (once)
 #   agentics-vault push      # encrypt file -> Vault
 #   agentics-vault pull      # Vault -> decrypt to file (default)
-# Requires: vault, openssl, security (macOS Keychain). Env overrides the defaults below.
+# Requires: vault, openssl. Passphrase: env, macOS Keychain, or a terminal prompt.
 set -euo pipefail
 
 export VAULT_ADDR="${VAULT_ADDR:-https://vault-amer.adobe.net}"
@@ -14,10 +14,14 @@ PATH_KV="${VAULT_KV_PATH:-cloudtech_wcms/jrivero/agentics}"
 KC_SVC="agentics-vault-key"          # Keychain item holding the passphrase
 
 passphrase() {
-  # Linux/VM fallback: no macOS Keychain, supply via env.
   [ -n "${AGENTICS_VAULT_PASSPHRASE:-}" ] && { printf '%s' "$AGENTICS_VAULT_PASSPHRASE"; return; }
-  security find-generic-password -a "$USER" -s "$KC_SVC" -w 2>/dev/null \
-    || { echo "no passphrase: set AGENTICS_VAULT_PASSPHRASE or run: $(basename "$0") set-passphrase" >&2; exit 1; }
+  security find-generic-password -a "$USER" -s "$KC_SVC" -w 2>/dev/null && return
+  # Linux/VM: no Keychain. Ask on the terminal each run, so nothing is
+  # stored on a shared box. /dev/tty because stdin may be the vault pipe.
+  local pw=
+  { printf 'passphrase: ' >/dev/tty && read -rs pw </dev/tty && echo >/dev/tty; } 2>/dev/null
+  [ -n "$pw" ] || { echo "no passphrase: set AGENTICS_VAULT_PASSPHRASE or run from a terminal" >&2; exit 1; }
+  printf '%s' "$pw"
 }
 
 set_passphrase() {
@@ -40,16 +44,28 @@ enc() {
   echo "no openssl with -pbkdf2 found; run: brew install openssl@3" >&2; exit 1
 }
 
+need_vault() {
+  command -v vault >/dev/null || { echo "vault CLI not found: https://developer.hashicorp.com/vault/install" >&2; exit 1; }
+}
+
 push() {
+  need_vault
   [ -s "$CREDS" ] || { echo "nothing to push: $CREDS is empty/missing" >&2; exit 1; }
-  blob=$(enc -in "$CREDS" 3<<<"$(passphrase)")
+  pw=$(passphrase)
+  blob=$(enc -in "$CREDS" 3<<<"$pw")
   vault kv put "$PATH_KV" blob="$blob"
   echo "pushed encrypted blob -> $PATH_KV"
 }
 
 pull() {
+  need_vault
   umask 077; mkdir -p "$(dirname "$CREDS")"
-  vault kv get -field=blob "$PATH_KV" | enc -d 3<<<"$(passphrase)" > "$CREDS"
+  pw=$(passphrase)
+  # Decrypt to a temp file, replace only on success: a failed vault call or
+  # wrong passphrase must not wipe the existing credentials.
+  tmp=$(mktemp "$CREDS.XXXXXX"); trap 'rm -f "$tmp"' EXIT
+  vault kv get -field=blob "$PATH_KV" | enc -d 3<<<"$pw" > "$tmp"
+  mv "$tmp" "$CREDS"
   echo "pulled $(grep -c = "$CREDS") values -> $CREDS"
 }
 
@@ -73,7 +89,7 @@ env:
   VAULT_ADDR                  default https://vault-amer.adobe.net
   VAULT_KV_PATH               default cloudtech_wcms/jrivero/agentics
   VAULT_NAMESPACE             set if your path is in a namespace
-  AGENTICS_VAULT_PASSPHRASE   passphrase source on Linux/VMs (no Keychain)
+  AGENTICS_VAULT_PASSPHRASE   passphrase; without it and no Keychain, prompts
   AGENTICS_CREDENTIALS_FILE   default ~/.agentics/credentials
 EOF
 }
