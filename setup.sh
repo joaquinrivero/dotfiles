@@ -22,13 +22,16 @@ echo "=== Dotfiles Setup ==="
 echo "Dotfiles directory: $DOTFILES_DIR"
 echo ""
 
-# Step 1: Ensure stow is installed
-if ! command -v brew &> /dev/null; then
+# Step 1: Ensure stow is installed (Linux: apt needs sudo, so the user runs it)
+if [[ "$OS" == "Linux" ]]; then
+    if ! command -v stow &> /dev/null; then
+        echo "ERROR: run first: sudo apt install -y zsh stow eza bat fzf zoxide"
+        exit 1
+    fi
+elif ! command -v brew &> /dev/null; then
     echo "ERROR: Homebrew not found. Install it first: https://brew.sh"
     exit 1
-fi
-
-if ! command -v stow &> /dev/null; then
+elif ! command -v stow &> /dev/null; then
     echo "Installing GNU Stow via Homebrew..."
     brew install stow
 fi
@@ -95,6 +98,11 @@ CLI_TOOLS=(
     "zoxide:zoxide"
     "diffnav:diffnav"
 )
+# Ubuntu ships bat as batcat; link it so aliases and the fzf preview find `bat`
+if [[ "$OS" == "Linux" ]] && ! command -v bat &>/dev/null && command -v batcat &>/dev/null; then
+    mkdir -p "$HOME/.local/bin" && ln -sf "$(command -v batcat)" "$HOME/.local/bin/bat"
+    export PATH="$HOME/.local/bin:$PATH"
+fi
 echo "Checking CLI tools..."
 MISSING_FORMULAE=()
 for entry in "${CLI_TOOLS[@]}"; do
@@ -105,7 +113,9 @@ for entry in "${CLI_TOOLS[@]}"; do
     fi
 done
 
-if [ ${#MISSING_FORMULAE[@]} -gt 0 ]; then
+if [ ${#MISSING_FORMULAE[@]} -gt 0 ] && [[ "$OS" == "Linux" ]]; then
+    echo "Missing tools (install manually): ${MISSING_FORMULAE[*]}"
+elif [ ${#MISSING_FORMULAE[@]} -gt 0 ]; then
     echo "Installing missing tools: ${MISSING_FORMULAE[*]}"
     brew install "${MISSING_FORMULAE[@]}"
 else
@@ -126,11 +136,6 @@ if ! command -v gh &>/dev/null; then
     rm -rf /tmp/gh.zip /tmp/gh-extract
 fi
 
-# gh-dash ships as a gh extension, not a brew formula
-if command -v gh &>/dev/null && ! gh extension list 2>/dev/null | grep -q "dlvhdr/gh-dash"; then
-    echo "Installing gh-dash extension..."
-    gh extension install dlvhdr/gh-dash || echo "  gh-dash install failed — skipping, retry later with: gh extension install dlvhdr/gh-dash"
-fi
 
 # omp (oh-my-pi, https://omp.sh) ships via its own install script, not brew
 if ! command -v omp &>/dev/null; then
@@ -169,11 +174,20 @@ if [[ "$OS" == "Darwin" ]] && [ ${#MAC_PACKAGES[@]} -gt 0 ]; then
     PACKAGES+=("${MAC_PACKAGES[@]}")
 fi
 
+# Pre-create agent dirs so stow links files inside, not the whole dir
+# (a folded dir would put pi/omp runtime state inside the repo)
+mkdir -p "$HOME/.pi/agent" "$HOME/.omp/agent"
 for pkg in "${PACKAGES[@]}"; do
     echo "  Stowing: $pkg"
     stow -d "$DOTFILES_DIR" -t "$HOME" "$pkg"
 done
 
+# gh-dash ships as a gh extension, not a brew formula. Runs after stow:
+# any gh call rewrites ~/.config/gh/config.yml, which would block stowing gh.
+if command -v gh &>/dev/null && ! gh extension list 2>/dev/null | grep -q "dlvhdr/gh-dash"; then
+    echo "Installing gh-dash extension..."
+    gh extension install dlvhdr/gh-dash || echo "  gh-dash install failed — skipping, retry later with: gh extension install dlvhdr/gh-dash"
+fi
 echo ""
 echo "Done! All packages stowed successfully."
 if [ "$HAS_CONFLICTS" = true ]; then
