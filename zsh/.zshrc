@@ -67,8 +67,9 @@ export EZA_COLORS="di=38;5;183:ex=38;5;114"
 export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export EDITOR='zed --wait'
-export VISUAL='zed --wait'
+# zed on the Mac, vi over ssh on Linux boxes without it
+if command -v zed &>/dev/null; then export EDITOR='zed --wait'; else export EDITOR=vi; fi
+export VISUAL=$EDITOR
 export HOMEBREW_NO_ENV_HINTS=1
 export BAT_THEME="Catppuccin Mocha"
 
