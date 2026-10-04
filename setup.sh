@@ -280,6 +280,12 @@ fi
 echo ""
 echo "=== Agentics Setup ==="
 [ -d "$HOME/src/agentics/.git" ] || git clone https://github.com/joaquinrivero/agentics-skills.git "$HOME/src/agentics"
+# pi loads local-path packages as-is and never runs npm install for them.
+# Only when node_modules is missing, so an existing dev install is untouched.
+SLICC="$HOME/src/agentics/extensions/slicc-adobe"
+if [ -f "$SLICC/package.json" ] && [ ! -d "$SLICC/node_modules" ] && command -v npm &>/dev/null; then
+    (cd "$SLICC" && npm install --omit=dev --no-audit --no-fund)
+fi
 if [ ! -f "$HOME/.agentics/credentials" ]; then
     mkdir -p "$HOME/.agentics" && umask 077
     printf 'JIRA_URL=\nJIRA_PAT=\nADOBE_WIKI_URL=\nADOBE_WIKI_PAT=\n' > "$HOME/.agentics/credentials"
