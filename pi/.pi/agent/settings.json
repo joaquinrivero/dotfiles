@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "1.0.0",
-  "defaultProvider": "github-copilot",
-  "defaultModel": "claude-sonnet-5.5",
+  "defaultProvider": "adobe",
+  "defaultModel": "claude-sonnet-5-5",
   "packages": [
     "~/src/agentics/extensions/slicc-adobe",
     "~/src/agentics/extensions/ponytail",
@@ -19,6 +19,7 @@
   "defaultThinkingLevel": "high",
   "extensions": [],
   "enabledModels": [
+    "adobe/claude-opus-5-5",
     "adobe/claude-haiku-4-5",
     "adobe/presto",
     "github-copilot/claude-opus-5.5",
@@ -32,7 +33,8 @@
     "github-copilot/kimi-k2.7-code",
     "github-copilot/kimi-k3",
     "github-copilot/claude-sonnet-5.5",
-    "adobe/claude-sonnet-5-5"
+    "adobe/claude-sonnet-5-5",
+    "github-copilot/gpt-6.1-sol"
   ],
   "warnings": {
     "anthropicExtraUsage": false
