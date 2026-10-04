@@ -14,9 +14,7 @@ alias -- -="cd -"
 
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-alias p="cd ~/projects"
 alias docs="cd ~/Documents"
-alias dev="cd ~/Development"
 
 # ============================================
 # Modern Replacements with Icons (Nerd Fonts)
@@ -86,10 +84,10 @@ alias gd="git diff"
 alias gl="git log --oneline --graph --decorate"
 alias gla="git log --oneline --graph --decorate --all"
 
-# Git with delta for beautiful diffs
-if command -v delta &> /dev/null; then
-    alias gdiff='git diff | delta'
-    alias gshow='git show | delta'
+# Git with diffnav for side-by-side diffs
+if command -v diffnav &> /dev/null; then
+    alias gdiff='diffnav'
+    alias gshow='git show | diffnav'
 fi
 
 # ============================================
