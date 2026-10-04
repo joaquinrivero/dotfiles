@@ -68,7 +68,7 @@ export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 # zed on the Mac, vi over ssh on Linux boxes without it
-if command -v zed &>/dev/null; then export EDITOR='zed'; else export EDITOR=vi; fi
+if command -v zed &>/dev/null; then export EDITOR='zed --wait'; else export EDITOR=vi; fi
 export VISUAL=$EDITOR
 export HOMEBREW_NO_ENV_HINTS=1
 export BAT_THEME="Catppuccin Mocha"

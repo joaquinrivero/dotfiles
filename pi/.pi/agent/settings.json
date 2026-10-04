@@ -16,6 +16,7 @@
   "images": {
     "blockImages": false
   },
+  "shellCommandPrefix": "export GIT_EDITOR=true GIT_SEQUENCE_EDITOR=true",
   "defaultThinkingLevel": "high",
   "extensions": [],
   "enabledModels": [
