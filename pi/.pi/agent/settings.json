@@ -1,13 +1,14 @@
 {
-  "lastChangelogVersion": "1.0.0",
+  "lastChangelogVersion": "1.2.0",
   "defaultProvider": "adobe",
   "defaultModel": "claude-sonnet-5-5",
   "packages": [
     "~/src/agentics/extensions/slicc-adobe",
-    "~/src/agentics/extensions/ponytail",
+    "git:github.com/DietrichGebert/ponytail@v5.2.0",
     "~/src/agentics/extensions/rivero",
     "npm:pi-mono-figma@0.2.2",
-    "npm:pi-subagents"
+    "npm:pi-subagents",
+    "../../src/tactik"
   ],
   "skills": [
     "~/src/agentics/skills"
