@@ -3,6 +3,3 @@
 [user]
     name = Your Name
     email = yourldap@adobe.com
-
-[github]
-    browserProfile = ghe-corp

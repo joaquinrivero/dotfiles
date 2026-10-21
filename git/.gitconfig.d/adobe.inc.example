@@ -6,7 +6,6 @@
 
 [github]
     user = yourldap_adobe
-    browserProfile = ghe-enterprise
 
 [commit]
     template = ~/.gitconfig.d/adobe-commit-template.txt
