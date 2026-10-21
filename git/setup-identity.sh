@@ -17,6 +17,7 @@ cat > "$DIR/personal.inc" <<EOF
 
 [github]
     user = ${personal_gh}
+    browserProfile = gh-personal
 EOF
 echo "Wrote $DIR/personal.inc"
 
@@ -34,6 +35,7 @@ cat > "$DIR/adobe.inc" <<EOF
 
 [github]
     user = ${adobe_gh}
+    browserProfile = ghe-enterprise
 EOF
 echo "Wrote $DIR/adobe.inc"
 
@@ -46,6 +48,9 @@ cat > "$DIR/corp.inc" <<EOF
 [user]
     name = ${corp_name}
     email = ${corp_email}
+
+[github]
+    browserProfile = ghe-corp
 EOF
 echo "Wrote $DIR/corp.inc"
 
