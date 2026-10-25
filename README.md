@@ -10,7 +10,7 @@ cd ~/dotfiles
 ./setup.sh
 ```
 
-`setup.sh` installs Stow via Homebrew, backs up conflicting files to `~/.dotfiles-backup-<timestamp>/`, and symlinks all packages.
+`setup.sh` installs Stow via Homebrew, backs up conflicting files to `~/.dotfiles-backup-<timestamp>/`, and symlinks the enabled packages.
 
 Set up your git identity after stowing:
 
@@ -24,7 +24,7 @@ To configure interactively with Claude Code:
 claude
 ```
 
-Claude reads `CLAUDE.md` and handles identity files, missing CLI tools, and shell plugins.
+Claude Code v2.1.277+ reads `AGENTS.md` and handles identity files, missing CLI tools, and shell plugins.
 
 ## Packages
 
@@ -38,11 +38,15 @@ Claude reads `CLAUDE.md` and handles identity files, missing CLI tools, and shel
 | `cursor` | Cursor editor settings |
 | `gh` | GitHub CLI config |
 | `misc` | `.editorconfig`, `.curlrc`, `.hushlogin` |
-| `direnv` | Per-directory env overrides |
+| `pi` | Pi agent settings, prompt, theme, and review template |
+| `omp` | OMP agent settings, LSP config, and theme |
+
+`setup.sh` enables `zsh git gh misc zed pi omp`. App packages in `MAC_PACKAGES` are optional.
+`macos/` and `terminal/` contain scripts and imported preferences, not Stow packages.
 
 ## How it works
 
-Each top-level directory is a Stow package mirroring the file structure relative to `~`. `stow <package>` creates symlinks in your home directory:
+Each Stow package mirrors the file structure relative to `~`. Stow links individual config files, keeping app-created runtime files outside the repository:
 
 ```
 dotfiles/zsh/.zshrc           →  ~/.zshrc
@@ -55,10 +59,11 @@ Editing files in `~/dotfiles/` updates the live config — no copy step needed.
 ## Managing packages
 
 ```bash
-stow -t ~ git        # stow a package
-stow -t ~ -D git     # remove symlinks
-stow -t ~ -R git     # re-stow after adding files
-cd ~/dotfiles && stow -t ~ */  # stow everything
+cd ~/dotfiles
+stow --no-folding -t ~ git     # stow a package
+stow -t ~ -D git               # remove symlinks
+stow --no-folding -t ~ -R git  # re-stow after adding files
+stow --no-folding -t ~ -R zsh git gh misc zed pi omp  # enabled packages
 ```
 
 ## Device-specific config
@@ -76,12 +81,14 @@ Works the same on Linux.
 
 1. Create a directory matching the tool name
 2. Mirror the path from `~` inside it
-3. Run `stow -t ~ <package>`
+3. Run `stow --no-folding -t ~ <package>`
 
 Example for neovim:
 
 ```bash
 mkdir -p nvim/.config/nvim
 cp ~/.config/nvim/init.lua nvim/.config/nvim/
-stow -t ~ nvim
+stow --no-folding -t ~ nvim
 ```
+
+Run the isolated Stow checks with `bash tests/stow.sh`.

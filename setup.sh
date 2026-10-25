@@ -48,6 +48,13 @@ CONFLICTING_FILES=(
     "$HOME/.config/git/ignore"
     "$HOME/.config/gh/config.yml"
     "$HOME/.config/zed/settings.json"
+    "$HOME/.pi/agent/settings.json"
+    "$HOME/.pi/agent/APPEND_SYSTEM.md"
+    "$HOME/.pi/agent/prompts/review-pr.md"
+    "$HOME/.pi/agent/themes/catppuccin-mocha.json"
+    "$HOME/.omp/agent/config.yml"
+    "$HOME/.omp/agent/lsp.json"
+    "$HOME/.omp/agent/themes/catppuccin-mocha.json"
 )
 
 if [[ "$OS" == "Darwin" ]]; then
@@ -174,13 +181,8 @@ if [[ "$OS" == "Darwin" ]] && [ ${#MAC_PACKAGES[@]} -gt 0 ]; then
     PACKAGES+=("${MAC_PACKAGES[@]}")
 fi
 
-# Pre-create agent dirs so stow links files inside, not the whole dir
-# (a folded dir would put pi/omp runtime state inside the repo)
-mkdir -p "$HOME/.pi/agent" "$HOME/.omp/agent"
-for pkg in "${PACKAGES[@]}"; do
-    echo "  Stowing: $pkg"
-    stow -d "$DOTFILES_DIR" -t "$HOME" "$pkg"
-done
+# Keep app-created runtime files outside the repository.
+stow --restow --no-folding -d "$DOTFILES_DIR" -t "$HOME" "${PACKAGES[@]}"
 
 # gh-dash ships as a gh extension, not a brew formula. Runs after stow:
 # any gh call rewrites ~/.config/gh/config.yml, which would block stowing gh.

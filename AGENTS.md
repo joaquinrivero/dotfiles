@@ -1,12 +1,13 @@
-# Dotfiles — Claude Code Context
+# Dotfiles agent instructions
 
 ## What this is
 
-macOS dotfiles managed with GNU Stow. Each top-level directory is a stow package that symlinks into `~`.
+macOS dotfiles managed with GNU Stow. Named packages mirror paths under `~`. `macos/` and `terminal/` are not Stow packages.
 
 ## Packages
 
-zsh, git, aerospace, gh, misc
+Enabled: zsh, git, gh, misc, zed, pi, omp.
+Optional macOS apps: aerospace, warp, cursor, spicetify.
 
 ## First-time setup
 
@@ -31,7 +32,7 @@ When helping a user set up these dotfiles for the first time:
 ## Stow commands
 
 ```bash
-stow -t ~ <package>      # symlink a package
-stow -t ~ -D <package>   # remove symlinks
-stow -t ~ -R <package>   # re-stow after changes
+stow --no-folding -t ~ <package>      # symlink config files, not directories
+stow -t ~ -D <package>                # remove symlinks
+stow --no-folding -t ~ -R <package>   # re-stow after changes
 ```
