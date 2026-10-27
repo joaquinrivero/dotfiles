@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "1.3.0",
+  "lastChangelogVersion": "1.4.0",
   "defaultProvider": "adobe",
   "defaultModel": "claude-sonnet-5-5",
   "packages": [
@@ -8,7 +8,9 @@
     "~/src/agentics/extensions/rivero",
     "npm:pi-mono-figma@0.2.2",
     "npm:pi-subagents",
-    "../../src/tactik"
+    "../../src/tactik",
+    "../../src/agentics/extensions/aem",
+    "git:github.com/joaquinrivero/pinata-pi-cli"
   ],
   "skills": [
     "~/src/agentics/skills"
