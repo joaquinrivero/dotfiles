@@ -10,7 +10,6 @@
     "npm:pi-mono-figma@0.2.2",
     "npm:pi-subagents",
     "../../src/tactik",
-    "../../src/agentics/extensions/aem",
     "git:github.com/joaquinrivero/pinata-pi-cli"
   ],
   "skills": [
