@@ -15,8 +15,8 @@ Review PR #$1 in $2 as me. Read these skills first and follow them: ponytail-rev
 
 ## 3. Validate each blocker with evidence
 - Prefer the cheapest proof: read the callers, run the existing test, run a small script.
-- If the blocker is visible in a browser, reproduce it with the agent-browser skill and AEM Sidekick (`aem-browser.sh`, profile `~/.agent-browser/profiles/aem`). Use the PR branch preview `https://<branch>--<repo>--<owner>.aem.page`. For MAS + Milo changes, use the mas-milo-verify skill.
-- On a "This site is protected" dialog (Sidekick), run `agent-browser snapshot -i`, click the "Sign in" button, wait about 6 seconds, and reload the page. The saved profile signs in without help. Do not tick "Don't show this dialog again".
+- If the blocker is visible in a browser, reproduce it with the aem-fetch skill and AEM Sidekick (`aem-browser.sh`, profile `~/.agent-browser/profiles/aem`). Use the PR branch preview `https://<branch>--<repo>--<owner>.aem.page`. For MAS + Milo changes, use the mas-milo-verify skill.
+- On a "This site is protected" dialog (Sidekick), run `agent-browser snapshot -i`, click the "Sign in" button, wait about 6 seconds, and reload the page. A profile with valid Adobe SSO can sign in without help. Otherwise ask for a human login. Do not tick "Don't show this dialog again".
 - If it still shows "Account not authorized for this site" or a 401: stop validating, tell me which site, and mark the finding unverified. Do not guess.
 - Each blocker ends as one of: reproduced (note the steps or a screenshot path), or unverified (write it as a question, never as a claim).
 - Drop any finding you cannot support.
