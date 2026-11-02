@@ -31,7 +31,7 @@ enabledModels:
 defaultThinkingLevel: high
 skills:
   customDirectories:
-    - ~/src/agentics/skills
+    - ~/src/agents/skills
 theme:
   dark: catppuccin-mocha
 statusLine:
@@ -41,4 +41,4 @@ dev:
 composer:
   shape: rule
 extensions:
-  - ~/src/agentics/extensions/slicc-adobe/index.ts
+  - ~/src/slicc-adobe/index.ts
