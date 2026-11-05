@@ -32,6 +32,7 @@ defaultThinkingLevel: high
 skills:
   customDirectories:
     - ~/src/agents/skills
+    - ~/src/adobe-pi/skills
 theme:
   dark: catppuccin-mocha
 statusLine:

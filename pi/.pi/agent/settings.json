@@ -5,6 +5,7 @@
   "packages": [
     "~/src/slicc-adobe",
     "~/src/aem",
+    "~/src/adobe-pi",
     "git:github.com/DietrichGebert/ponytail@v5.2.0",
     "~/src/rivero-pi",
     "npm:pi-mono-figma@0.2.2",
