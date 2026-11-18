@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "999.0.0",
   "defaultProvider": "adobe",
-  "defaultModel": "claude-sonnet-5-5",
+  "defaultModel": "claude-opus-5-5",
   "packages": [
     "~/src/slicc-adobe",
     "~/src/aem",
@@ -43,5 +43,9 @@
   "warnings": {
     "anthropicExtraUsage": false
   },
-  "tuiMode": "regular"
+  "tuiMode": "regular",
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-mono-figma@0.2.2\",\"scope\":\"user\"}": "0.2.2",
+    "{\"source\":\"npm:pi-subagents\",\"scope\":\"user\"}": "0.88.0"
+  }
 }
