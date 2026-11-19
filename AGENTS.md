@@ -6,7 +6,7 @@ macOS dotfiles managed with GNU Stow. Named packages mirror paths under `~`. `ma
 
 ## Packages
 
-Enabled: zsh, git, gh, misc, zed, pi, omp.
+Enabled: zsh, git, gh, misc, zed, pi, omp, herdr.
 Optional macOS apps: aerospace, warp, cursor, spicetify.
 
 ## First-time setup

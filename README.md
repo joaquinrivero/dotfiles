@@ -40,8 +40,9 @@ Claude Code v2.1.277+ reads `AGENTS.md` and handles identity files, missing CLI 
 | `misc` | `.editorconfig`, `.curlrc`, `.hushlogin` |
 | `pi` | Pi agent settings, prompt, theme, and review template |
 | `omp` | OMP agent settings, LSP config, and theme |
+| `herdr` | herdr config (desktop notifications via the terminal) |
 
-`setup.sh` enables `zsh git gh misc zed pi omp`. App packages in `MAC_PACKAGES` are optional.
+`setup.sh` enables `zsh git gh misc zed pi omp herdr`. App packages in `MAC_PACKAGES` are optional.
 `macos/` and `terminal/` contain scripts and imported preferences, not Stow packages.
 
 ## How it works
@@ -63,7 +64,7 @@ cd ~/dotfiles
 stow --no-folding -t ~ git     # stow a package
 stow -t ~ -D git               # remove symlinks
 stow --no-folding -t ~ -R git  # re-stow after adding files
-stow --no-folding -t ~ -R zsh git gh misc zed pi omp  # enabled packages
+stow --no-folding -t ~ -R zsh git gh misc zed pi omp herdr  # enabled packages
 ```
 
 ## Device-specific config

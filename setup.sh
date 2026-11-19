@@ -6,7 +6,7 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OS="$(uname -s)"
 
 # Cross-platform: always stow (config is ready when app is installed)
-CORE_PACKAGES=(zsh git gh misc zed pi omp)
+CORE_PACKAGES=(zsh git gh misc zed pi omp herdr)
 
 # macOS-only apps
 MAC_PACKAGES=()  # mini-specific: skipping aerospace/warp/cursor/spicetify
@@ -55,6 +55,7 @@ CONFLICTING_FILES=(
     "$HOME/.omp/agent/config.yml"
     "$HOME/.omp/agent/lsp.json"
     "$HOME/.omp/agent/themes/catppuccin-mocha.json"
+    "$HOME/.config/herdr/config.toml"
 )
 
 if [[ "$OS" == "Darwin" ]]; then

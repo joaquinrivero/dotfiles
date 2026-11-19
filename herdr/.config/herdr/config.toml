@@ -1,0 +1,11 @@
+onboarding = false
+[ui]
+agent_panel_sort = "spaces"
+
+show_agent_labels_on_pane_borders = true
+[ui.toast]
+delivery = "terminal"
+
+[experimental]
+switch_ascii_input_source_in_prefix = true
+pane_history = true
