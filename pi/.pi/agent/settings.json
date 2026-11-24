@@ -9,7 +9,6 @@
     "git:github.com/DietrichGebert/ponytail@v5.2.0",
     "~/src/rivero-pi",
     "npm:pi-mono-figma@0.2.2",
-    "npm:pi-subagents",
     "../../src/tactik",
     "git:github.com/joaquinrivero/pinata-pi-cli"
   ],
@@ -45,7 +44,6 @@
   },
   "tuiMode": "regular",
   "extensionChangelogVersions": {
-    "{\"source\":\"npm:pi-mono-figma@0.2.2\",\"scope\":\"user\"}": "0.2.2",
-    "{\"source\":\"npm:pi-subagents\",\"scope\":\"user\"}": "0.88.0"
+    "{\"source\":\"npm:pi-mono-figma@0.2.2\",\"scope\":\"user\"}": "0.2.2"
   }
 }
