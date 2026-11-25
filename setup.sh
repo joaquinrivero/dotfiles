@@ -208,8 +208,15 @@ render_home_template() {
     echo "  Written: ${target#$HOME/}"
 }
 
-# Step 3b: Render templated configs
+# Step 3b: Install macOS apps and link their CLIs
 if [[ "$OS" == "Darwin" ]]; then
+    if [ ! -d "/Applications/Ghostty.app" ] && [ ! -d "$HOME/Applications/Ghostty.app" ]; then
+        echo "Installing Ghostty..."
+        brew install --cask ghostty
+    else
+        echo "Ghostty already installed — skipping."
+    fi
+
     # Install Zed if missing, then link its CLI
     ZED_CLI="/Applications/Zed.app/Contents/MacOS/cli"
     if [ ! -d "/Applications/Zed.app" ] && command -v brew &>/dev/null; then
@@ -271,7 +278,7 @@ else
     echo ""
     echo "Options:"
     echo "  1) Run the setup script:  ./git/setup-identity.sh"
-    echo "  2) Let Claude Code guide you:  claude"
+    echo "  2) Let Pi guide you:  pi"
     echo ""
     read -rp "Run identity setup now? [y/N] " answer
     if [[ "$answer" =~ ^[Yy]$ ]]; then
