@@ -282,20 +282,15 @@ fi
 # Step 7: Agent skills (pi reads them from ~/src/agents)
 echo ""
 echo "=== Agent Setup ==="
-[ -d "$HOME/src/agents/.git" ] || git clone https://github.com/joaquinrivero/agentics-skills.git "$HOME/src/agents"
+[ -d "$HOME/src/agents/.git" ] || git clone https://github.com/joaquinrivero/agents.git "$HOME/src/agents"
 SLICC="$HOME/src/slicc-adobe"
 [ -d "$SLICC/.git" ] || git clone https://github.com/joaquinrivero/slicc-adobe.git "$SLICC"
 [ -d "$HOME/src/rivero-pi/.git" ] || git clone https://github.com/joaquinrivero/rivero.git "$HOME/src/rivero-pi"
 [ -d "$HOME/src/adobe-pi/.git" ] || git clone https://github.com/joaquinrivero/adobe-pi.git "$HOME/src/adobe-pi"
-AEM="$HOME/src/aem"
-[ -d "$AEM/.git" ] || git clone https://github.com/joaquinrivero/aem.git "$AEM"
 # pi loads local-path packages as-is and never runs npm install for them.
 # Only when node_modules is missing, so an existing dev install is untouched.
 if [ -f "$SLICC/package.json" ] && [ ! -d "$SLICC/node_modules" ] && command -v npm &>/dev/null; then
     (cd "$SLICC" && npm install --omit=dev --no-audit --no-fund)
-fi
-if [ ! -d "$AEM/node_modules" ] && command -v npm &>/dev/null; then
-    (cd "$AEM" && npm ci --omit=dev --omit=peer --no-audit --no-fund)
 fi
 SANDBOX="$HOME/src/adobe-pi/skills/sandbox-run"
 if [ -f "$SANDBOX/package.json" ] && [ ! -d "$SANDBOX/node_modules" ] && command -v npm &>/dev/null; then
