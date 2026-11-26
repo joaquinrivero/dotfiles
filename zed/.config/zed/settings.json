@@ -72,11 +72,6 @@
     },
   },
   "buffer_font_family": "Hack Nerd Font Mono",
-  "agent_servers": {
-    "claude-acp": {
-      "type": "registry",
-    },
-  },
   "base_keymap": "VSCode",
   "ui_font_size": 21.0,
   "buffer_font_size": 16.0,
