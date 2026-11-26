@@ -177,6 +177,12 @@ if ! command -v herdr &>/dev/null; then
     echo "Installing herdr..."
     curl -fsSL https://herdr.dev/install.sh | sh
 fi
+
+# agent-browser CLI backs the agent-browser skill. `install` downloads Chrome.
+if ! command -v agent-browser &>/dev/null && command -v npm &>/dev/null; then
+    echo "Installing agent-browser..."
+    npm i -g agent-browser && agent-browser install
+fi
 echo ""
 
 # Step 3: Stow all packages
