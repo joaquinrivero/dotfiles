@@ -3,7 +3,7 @@
   "defaultProvider": "adobe",
   "defaultModel": "claude-opus-5-5",
   "packages": [
-    "~/src/slicc-adobe",
+    "git:github.com/joaquinrivero/slicc-adobe",
     "git:github.com/joaquinrivero/aem",
     "~/src/adobe-pi",
     "git:github.com/DietrichGebert/ponytail@v5.2.0",

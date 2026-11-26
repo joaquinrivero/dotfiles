@@ -42,4 +42,4 @@ dev:
 composer:
   shape: rule
 extensions:
-  - ~/src/slicc-adobe/index.ts
+  - ~/.pi/agent/git/github.com/joaquinrivero/slicc-adobe/index.ts
