@@ -34,7 +34,7 @@ ln -s dotfiles/git/.gitconfig "$HOME/.gitconfig"
 OS=Darwin
 stow_packages
 
-for path in .config/zed .pi/agent .omp/agent; do
+for path in .config/zed .pi/agent; do
     test -d "$HOME/$path"
     test ! -L "$HOME/$path"
 done
@@ -45,7 +45,7 @@ done
 grep -qxF "$ZSHRC_LINE" "$HOME/.zshrc"
 env -u XDG_CONFIG_HOME git config --global test.key 1
 grep -q 'key = 1' "$HOME/.gitconfig"
-for path in .config/zsh/zshrc .config/git/config .pi/agent/prompts/review-pr.md .omp/agent/config.yml .omp/agent/lsp.json .omp/agent/themes/catppuccin-mocha.json; do
+for path in .config/zsh/zshrc .config/git/config .pi/agent/prompts/review-pr.md; do
     test -L "$HOME/$path"
     test -f "$HOME/$path"
 done

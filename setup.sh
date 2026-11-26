@@ -6,7 +6,7 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OS="$(uname -s)"
 
 # Cross-platform: always stow (config is ready when app is installed)
-CORE_PACKAGES=(zsh git gh misc zed pi omp herdr)
+CORE_PACKAGES=(zsh git gh misc zed pi herdr)
 
 # macOS-only apps
 MAC_PACKAGES=()  # mini-specific: skipping aerospace/warp/cursor/spicetify
@@ -52,9 +52,6 @@ CONFLICTING_FILES=(
     "$HOME/.pi/agent/APPEND_SYSTEM.md"
     "$HOME/.pi/agent/prompts/review-pr.md"
     "$HOME/.pi/agent/themes/catppuccin-mocha.json"
-    "$HOME/.omp/agent/config.yml"
-    "$HOME/.omp/agent/lsp.json"
-    "$HOME/.omp/agent/themes/catppuccin-mocha.json"
     "$HOME/.config/herdr/config.toml"
 )
 
@@ -152,12 +149,6 @@ if ! command -v gh &>/dev/null; then
 fi
 
 
-# omp (oh-my-pi, https://omp.sh) ships via its own install script, not brew
-if ! command -v omp &>/dev/null; then
-    echo "Installing omp..."
-    curl -fsSL https://omp.sh/install.sh | sh
-fi
-
 # pi (pi.dev) ships via its own install script, not brew — avoids node/go
 # rebuilds on Tier-3 platforms (e.g. Intel Macs post-Homebrew-4.6)
 if ! command -v pi &>/dev/null; then
@@ -166,7 +157,7 @@ if ! command -v pi &>/dev/null; then
 fi
 
 # uv (Python tool runner, required by jira-api-skill/wiki-api-skill) ships
-# via its own install script, not brew — same Tier-3 gap as pi/omp/gh
+# via its own install script, not brew — same Tier-3 gap as pi/gh
 if ! command -v uv &>/dev/null; then
     echo "Installing uv..."
     curl -LsSf https://astral.sh/uv/install.sh | sh
