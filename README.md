@@ -30,8 +30,8 @@ Claude Code v2.1.277+ reads `AGENTS.md` and handles identity files, missing CLI 
 
 | Package | What it manages |
 |---------|----------------|
-| `zsh` | `.zshrc`, `.aliases` |
-| `git` | `.gitconfig`, `.gitattributes`, `.config/git/ignore` |
+| `zsh` | `.config/zsh/zshrc`, `.aliases` |
+| `git` | `.config/git/config`, `.gitattributes`, `.config/git/ignore` |
 | `aerospace` | AeroSpace tiling window manager |
 | `zed` | Zed editor settings and Catppuccin theme |
 | `warp` | Warp terminal settings |
@@ -50,12 +50,14 @@ Claude Code v2.1.277+ reads `AGENTS.md` and handles identity files, missing CLI 
 Each Stow package mirrors the file structure relative to `~`. Stow links individual config files, keeping app-created runtime files outside the repository:
 
 ```
-dotfiles/zsh/.zshrc           →  ~/.zshrc
-dotfiles/git/.gitconfig       →  ~/.gitconfig
+dotfiles/zsh/.config/zsh/zshrc  →  ~/.config/zsh/zshrc
+dotfiles/git/.config/git/config →  ~/.config/git/config
 dotfiles/aerospace/.config/…  →  ~/.config/aerospace/…
 ```
 
 Editing files in `~/dotfiles/` updates the live config — no copy step needed.
+
+`~/.zshrc` and `~/.gitconfig` are untracked local files that `setup.sh` creates. Installers, `gh auth setup-git` and `git config --global` write to them, so they never dirty the repo. `~/.zshrc` sources the tracked zshrc, and git reads `~/.gitconfig` after the tracked config, so local settings win.
 
 ## Managing packages
 

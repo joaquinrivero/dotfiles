@@ -38,9 +38,9 @@ fi
 
 # Step 2: Back up existing files that would conflict with stow
 CONFLICTING_FILES=(
-    "$HOME/.zshrc"
+    "$HOME/.config/zsh/zshrc"
     "$HOME/.aliases"
-    "$HOME/.gitconfig"
+    "$HOME/.config/git/config"
     "$HOME/.gitattributes"
     "$HOME/.editorconfig"
     "$HOME/.curlrc"
@@ -96,6 +96,13 @@ if [ "$HAS_CONFLICTS" = true ]; then
             echo "  Backed up: $REL_PATH"
         fi
     done
+fi
+
+# ~/.zshrc must source the tracked zshrc. Back up any other one.
+ZSHRC_LINE='source ~/.config/zsh/zshrc'
+if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ] && ! grep -qxF "$ZSHRC_LINE" "$HOME/.zshrc"; then
+    mkdir -p "$BACKUP_DIR" && mv "$HOME/.zshrc" "$BACKUP_DIR/.zshrc"
+    echo "  Backed up: .zshrc"
 fi
 
 # Step 2b: Install required CLI tools (command:formula — differ for pi)
@@ -185,6 +192,15 @@ fi
 # Keep app-created runtime files outside the repository.
 stow --restow --no-folding -d "$DOTFILES_DIR" -t "$HOME" "${PACKAGES[@]}"
 
+# ~/.zshrc and ~/.gitconfig are untracked local files that installers,
+# gh and `git config --global` write to. They load the tracked config, which
+# lives in ~/.config. Without ~/.gitconfig, git writes to the tracked file.
+for f in "$HOME/.zshrc" "$HOME/.gitconfig"; do
+    if [[ -L "$f" && "$(readlink "$f")" == *dotfiles/* ]]; then rm "$f"; fi  # old symlink layout
+done
+[ -e "$HOME/.zshrc" ] || printf '%s\n' "$ZSHRC_LINE" > "$HOME/.zshrc"
+touch "$HOME/.gitconfig"
+
 # gh-dash ships as a gh extension, not a brew formula. Runs after stow:
 # any gh call rewrites ~/.config/gh/config.yml, which would block stowing gh.
 if command -v gh &>/dev/null && ! gh extension list 2>/dev/null | grep -q "dlvhdr/gh-dash"; then
@@ -197,7 +213,7 @@ if [ "$HAS_CONFLICTS" = true ]; then
     echo "Backup of original files: $BACKUP_DIR"
 fi
 echo ""
-echo "Verify with: ls -la ~/.zshrc ~/.gitconfig"
+echo "Verify with: ls -la ~/.config/zsh/zshrc ~/.config/git/config"
 echo ""
 
 render_home_template() {

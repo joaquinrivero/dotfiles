@@ -16,7 +16,7 @@ When helping a user set up these dotfiles for the first time:
 1. **Prerequisites** — Ensure Homebrew is installed. If not, guide them to install it.
 2. **Run `./setup.sh`** — This installs stow, backs up conflicting files, and symlinks all packages.
 3. **Git identity** — Run `./git/setup-identity.sh` to generate personal, Adobe enterprise (`adobe.inc`), and Adobe corp (`corp.inc`) `.inc` files and the commit template. `.gitconfig` routes by path: `~/src/adobe/enterprise/` → enterprise, `~/src/adobe/corp/` → corp, everything else → personal. The `.inc` files are gitignored; only `.example` templates are tracked.
-4. **Local git identity** — If they only need a personal identity (no enterprise), create `~/.gitconfig.local` with `[user] name` and `email`.
+4. **Local git identity** — If they only need a personal identity (no enterprise), set `[user] name` and `email` in `~/.gitconfig`.
 5. **Private env** — Create `~/.env.private` for tokens and secrets (sourced by `.zshrc`, gitignored).
 5b. **Agent skills**: `setup.sh` clones the skills repo to `~/src/agents` and the Adobe skills to `~/src/adobe-pi` (pi reads skills from both) and stubs `~/.agentics/credentials`. Fill in the wiki/jira PATs. That file lives outside the repo and is never committed.
 6. **Shell plugins** — zsh-autosuggestions and zsh-syntax-highlighting are expected under `~/.oh-my-zsh/custom/plugins/`. Guide installation if missing.
@@ -26,7 +26,7 @@ When helping a user set up these dotfiles for the first time:
 
 - Identity files (`*.inc`, `adobe-commit-template.txt`) are generated, not tracked — use the `.example` files or `setup-identity.sh`.
 - Secrets go in `~/.env.private`, never in tracked files.
-- `~/.gitconfig.local` is the local identity override (also gitignored).
+- `~/.zshrc` and `~/.gitconfig` are untracked local files that load the tracked `~/.config/zsh/zshrc` and `~/.config/git/config`. Tools that write to them never dirty the repo.
 - Stow global ignore (`.stow-global-ignore`) excludes README, LICENSE, setup scripts, and .DS_Store from symlinking.
 
 ## Stow commands

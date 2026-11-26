@@ -8,7 +8,7 @@ Check if these are installed and offer to install any that are missing:
 - GNU Stow (`stow`)
 
 ### 2. Stow packages
-Check if `./setup.sh` has already been run by testing if `~/.zshrc` is a symlink pointing into this repo.
+Check if `./setup.sh` has already been run by testing if `~/.config/zsh/zshrc` is a symlink pointing into this repo.
 - If not yet run, explain what it does and offer to run it.
 - If already stowed, confirm and move on.
 

@@ -231,7 +231,7 @@ alias sudo='sudo '
 # Reload shell configuration
 alias reload="exec ${SHELL} -l"
 alias sz="source ~/.zshrc"
-alias ez="$EDITOR ~/.zshrc"
+alias ez="$EDITOR ~/.config/zsh/zshrc"
 alias ea="$EDITOR ~/.aliases"
 
 # Clear with style
