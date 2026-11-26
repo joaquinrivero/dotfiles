@@ -19,6 +19,7 @@ When helping a user set up these dotfiles for the first time:
 4. **Local git identity** — If they only need a personal identity (no enterprise), set `[user] name` and `email` in `~/.gitconfig`.
 5. **Private env** — Create `~/.env.private` for tokens and secrets (sourced by `.zshrc`, gitignored).
 5b. **Agent skills**: `setup.sh` clones the skills repo to `~/src/agents` and the Adobe skills to `~/src/adobe-pi` (pi reads skills from both) and stubs `~/.agentics/credentials`. Fill in the wiki/jira PATs. That file lives outside the repo and is never committed.
+5c. **publish-ip** (mini): `setup.sh` installs a LaunchAgent that posts the LAN IP to a secret gist. Put the gist id in `~/.config/publish-ip.gist` and run `gh auth login` as `joaquinrivero`.
 6. **Shell plugins** — zsh-autosuggestions and zsh-syntax-highlighting are expected under `~/.oh-my-zsh/custom/plugins/`. Guide installation if missing.
 7. **CLI tools** — The config assumes: eza, bat, fzf, zoxide. Offer to install any that are missing via `brew install`.
 

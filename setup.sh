@@ -248,6 +248,15 @@ if [[ "$OS" == "Darwin" ]]; then
     fi
 fi
 
+# Step 3c: publish-ip agent (needs ~/.config/publish-ip.gist holding the gist id)
+if [[ "$OS" == "Darwin" ]]; then
+    PLIST="$HOME/Library/LaunchAgents/com.jrivero.publish-ip.plist"
+    render_home_template "$DOTFILES_DIR/macos/com.jrivero.publish-ip.plist" "$PLIST"
+    mkdir -p "$HOME/.cache"
+    launchctl bootout "gui/$(id -u)/com.jrivero.publish-ip" 2>/dev/null || true
+    launchctl bootstrap "gui/$(id -u)" "$PLIST"
+fi
+
 # Step 4: Fonts
 echo "=== Fonts ==="
 if [[ "$OS" == "Darwin" ]]; then
