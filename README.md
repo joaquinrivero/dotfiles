@@ -18,13 +18,7 @@ Set up your git identity after stowing:
 ./git/setup-identity.sh
 ```
 
-To configure interactively with Claude Code:
-
-```bash
-claude
-```
-
-Claude Code v2.1.277+ reads `AGENTS.md` and handles identity files, missing CLI tools, and shell plugins.
+To configure interactively, run `pi` in this repo and type `/setup`. Pi reads `AGENTS.md` and loads the prompt from `.pi/prompts/setup.md` once you trust the project. It handles identity files, missing CLI tools, and shell plugins.
 
 ## Packages
 

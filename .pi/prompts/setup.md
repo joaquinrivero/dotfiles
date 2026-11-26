@@ -1,3 +1,6 @@
+---
+description: Guide first-time dotfiles setup
+---
 Guide the user through first-time dotfiles setup, step by step. Be conversational and check what's already done before suggesting actions.
 
 ## Steps
